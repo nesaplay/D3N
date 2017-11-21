@@ -1,6 +1,6 @@
 import React from "react";
 
-import HelloWorld from "./helloWorld/helloWorld";
+import LoginPage from "./login-page/login-page";
 
 class App extends React.Component {
     constructor(props) {
@@ -8,7 +8,7 @@ class App extends React.Component {
     }
 
     render() {
-        return <HelloWorld />;
+        return <LoginPage />;
     }
 }
 
