@@ -9,10 +9,10 @@ class Login extends React.Component {
     render(){
 
         return(
-            <div className="login/register-form">
-                <div>
-                    <h3><Link to="/login">Login</Link></h3>
-                    <h3><Link to="/register">Register</Link></h3>
+            <div className="login/register-form  col s6 container">
+                <div className="row">
+                    <h3 className="col s6"><Link to="/login">Login</Link></h3>
+                    <h3 className="col s6 "><Link to="/register">Register</Link></h3>
                 </div>
                 <form>
                     email:<input type="text" placeholder="Email Address" value=""/> 
@@ -21,8 +21,8 @@ class Login extends React.Component {
                     pass:<input type="password" placeholder="Password" value=""/> 
                     <div className="error-password"> </div>
 
-                    <input type="submit" value="Login"/>
-                    <div className="error-submit"> </div>
+                    <input type="submit" value="Login" className="btn waves-effect waves-light blue lighten-3"/>
+                    <div className="error-submit "> </div>
                     
                 </form>
                 

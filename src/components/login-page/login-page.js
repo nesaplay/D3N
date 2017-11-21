@@ -12,7 +12,7 @@ class LoginPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="row container ">
                 <Welcome />
                 <Switch>
                     <Route  path='/login' component={Login} />

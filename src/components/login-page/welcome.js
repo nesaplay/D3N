@@ -3,7 +3,7 @@ import React from "react";
 const Welcome = ()=>{
 
     return(
-        <div>
+        <div className="col s6 ">
             <h1>
                 Welcome to BitBook
             </h1>
