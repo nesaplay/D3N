@@ -1,23 +1,35 @@
 import fetch from "fetch";
+import { SESSION_STORAGE_KEY, API_KEY } from "../../constants";
 
 export default class FetchService {
 
     headers() {
+
+        let sessionId = sessionStorage.getItem(SESSION_STORAGE_KEY);
+        if (sessionId) {
+
+            return {
+                "Content-Type": "application/json",
+                "SessionId": sessionId,
+                "API": API_KEY
+            };
+        }
+
         return {
             "Content-Type": "application/json",
-            "SessionId": "jTAAZCA5",
+            "API": API_KEY            
         };
     }
 
-    get(url, handler) {
+    get(url, successHandler, errorHandler) {
 
         fetch(url, {
             method: "GET",
             headers: this.headers()
         })
             .then(response => response.json())
-            .then(jsonData => handler(jsonData))
-            .catch(error => handler(error));
+            .then(jsonData => successHandler(jsonData))
+            .catch(error => errorHandler(error));
     }
 
     post(url, postData) {
