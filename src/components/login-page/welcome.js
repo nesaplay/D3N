@@ -1,13 +1,11 @@
 import React from "react";
-import RedirectService from "../../services/redirectService";
 
 const Welcome = () => {
 
-    const redi = new RedirectService();
 
     return (
         <div className="col s6 ">
-            <h1 onClick={() => redi.goTo("test")}>
+            <h1>
                 Welcome to BitBook
             </h1>
             <p>
