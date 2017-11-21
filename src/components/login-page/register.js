@@ -10,9 +10,9 @@ class Register extends React.Component {
 
         return (
             <div className="login/register-form  col s6 ">
-                <div>
-                    <h3><Link to="/login">Login</Link></h3>
-                    <h3><Link to="/register">Register</Link></h3>
+                <div className="row">
+                    <h3 className="col s6"><Link to="/login">Login</Link></h3>
+                    <h3 className="col s6"><Link to="/register">Register</Link></h3>
                 </div>
                 <form>
                     Name:<input type="text" placeholder="Name" value="" />
