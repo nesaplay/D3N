@@ -1,5 +1,5 @@
-import fetch from "fetch";
-import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from "../../constants";
+// import fetch from "fetch";
+import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from "../constants";
 
 export default class FetchService {
 
@@ -32,7 +32,7 @@ export default class FetchService {
             .catch(error => errorHandler(error));
     }
 
-    post(url, postData) {
+    post(url, postData,successHandler,errorHandler) {
 
         fetch(`${BASE_URL}${url}`, {
             method: "POST",
@@ -40,8 +40,8 @@ export default class FetchService {
             headers: this.headers()
         })
             .then(response => response.json())
-            .then(jsonData => console.log(jsonData))
-            .catch(error => console.log(error));
+            .then(jsonData => successHandler(jsonData))
+            .catch(error => errorHandler(error));
     }
 
 }
