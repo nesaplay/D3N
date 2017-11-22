@@ -3,24 +3,24 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import LoginPage from "./login-page/login-page";
 import MainPage from "./mainPage";
-// import AuthenticationService from '../services/authenticationService';
+import AuthenticationService from "../services/authenticationService";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
-        // this.isAuth = new AuthenticationService().isAuthenticated();
+        this.authentication = new AuthenticationService();
     }
 
 
     render() {
-        // this.isAuth ? <MainPage /> : <LoginPage />
-        return (
 
-            <div>
-                <LoginPage />
-            </div>
-        );
+        return this.authentication.isUserAuthenticated() ? <MainPage /> : <LoginPage />;
+        // if (this.authentication.isUserAuthenticated()) {
+        //     return <MainPage />;
+        // }
+
+        // return <LoginPage />;
     }
 }
 

@@ -11,7 +11,7 @@ class MainPage extends Component {
         return (
             <main>
                 <Header />
-                <div> Dobrodosli na main </div>
+                <div> Uspesno ste se ulogovali! </div>
             </main>
         );
     }

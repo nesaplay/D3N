@@ -7,24 +7,23 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            emailString: "",
+            usernameString: "",
             passwordString: ""
         };
         this.authentication = new AuthenticationService();
 
-        this.emailChangeHandler = this.emailChangeHandler.bind(this);
+        this.usernameChangeHandler = this.usernameChangeHandler.bind(this);
         this.passwordChangeHandler = this.passwordChangeHandler.bind(this);
         this.loginData = this.loginData.bind(this);
     }
-    emailChangeHandler(event) {
-        const emailString = event.target.value;
+    usernameChangeHandler(event) {
+        const usernameString = event.target.value;
 
         this.setState({
-            emailString: emailString
+            usernameString: usernameString
         });
     }
     passwordChangeHandler(event) {
-        console.log(this.state.passwordString);
         const passwordString = event.target.value;
 
         this.setState({
@@ -33,12 +32,10 @@ class Login extends React.Component {
     }
 
     loginData() {
-        console.log("dadasdads");
         let userData = {
-            username: this.state.emailString,
+            username: this.state.usernameString,
             password: this.state.passwordString
         };
-        console.log(userData);
         this.authentication.login(userData);
 
     }
@@ -52,8 +49,8 @@ class Login extends React.Component {
                     <h3 className="col s6 "><Link to="/register">Register</Link></h3>
                 </div>
                 <form>
-                    email:<input onChange={this.emailChangeHandler} type="text" placeholder="Email Address" value={this.state.emailString} />
-                    <div className="error-email"> </div>
+                    username:<input onChange={this.usernameChangeHandler} type="text" placeholder="username" value={this.state.emailString} />
+                    <div className="error-username"> </div>
 
                     pass:<input onChange={this.passwordChangeHandler} type="password" placeholder="Password" value={this.state.passwordString} />
                     <div className="error-password"> </div>
