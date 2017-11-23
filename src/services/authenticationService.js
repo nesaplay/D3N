@@ -8,6 +8,7 @@ export default class AuthenticationService {
 
         this.fetch = new FetchService();
         this.redirectToRoot = new RedirectService();
+        
 
     }
 

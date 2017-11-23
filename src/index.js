@@ -9,5 +9,5 @@ ReactDOM.render(
     <HashRouter>
         <App />
     </HashRouter>,
-    document.querySelector(".container")
+    document.querySelector(".app")
 );

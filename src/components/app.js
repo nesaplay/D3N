@@ -15,7 +15,7 @@ class App extends React.Component {
 
     render() {
 
-        return this.authentication.isUserAuthenticated() ? <HomePage /> : <HomePage />;
+        return this.authentication.isUserAuthenticated() ? <HomePage /> : <LoginPage />;
         // if (this.authentication.isUserAuthenticated()) {
         //     return <MainPage />;
         // }
