@@ -1,8 +1,8 @@
 import React from "react";
-
 import { Switch, Route } from "react-router-dom";
+
 import LoginPage from "./login-page/login-page";
-import MainPage from "./mainPage";
+import HomePage from "./profilePage/homePage";
 import AuthenticationService from "../services/authenticationService";
 
 class App extends React.Component {
@@ -15,7 +15,7 @@ class App extends React.Component {
 
     render() {
 
-        return this.authentication.isUserAuthenticated() ? <MainPage /> : <LoginPage />;
+        return this.authentication.isUserAuthenticated() ? <HomePage /> : <HomePage />;
         // if (this.authentication.isUserAuthenticated()) {
         //     return <MainPage />;
         // }
