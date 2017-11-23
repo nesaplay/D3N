@@ -2,14 +2,12 @@ import React from "react";
 import FetchService from "../services/fetchService";
 import RedirectService from "../services/redirectService";
 import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from "../constants";
-import Login from "../components/login-page/login";
 
 export default class AuthenticationService {
     constructor(props) {
 
         this.fetch = new FetchService();
         this.redirectToRoot = new RedirectService();
-        this.login = new Login();
 
     }
 

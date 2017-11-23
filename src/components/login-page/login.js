@@ -47,20 +47,11 @@ class Login extends React.Component {
             this.authentication.login(userData);
         }
     }
-    errorHandler(message){
-        
-        let errorString = sessionStorage.getItem("error");
-
-        this.setState({
-            errorString
-        });
-    }
 
     render() {
-
-        if(this.state.errorString) {
-            return <h2> {this.state.errorString}</h2>;
-        }        
+        // if(this.state.errorString) {
+        //     return <h2> {this.state.errorString}</h2>;
+        // }        
 
         return (
             <div className="login/register-form  col s6 container row">
@@ -70,7 +61,7 @@ class Login extends React.Component {
                 </div>
                 <form className="col s12" onSubmit={this.loginData} >
                     <div className="input-field col s12">
-                        <input id="username" type="text" value={this.state.emailString} />
+                        <input id="username" type="text" onChange={this.usernameChangeHandler} value={this.state.emailString} />
                         <label htmlFor="username">Username</label>
                         <span className="helper-text" data-error="username is required" data-success="success"></span>
                     </div>
