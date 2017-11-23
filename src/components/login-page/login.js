@@ -51,14 +51,6 @@ class Login extends React.Component {
             }
         }
     }
-    // errorHandler(message){
-        
-    //     let errorString = sessionStorage.getItem("error");
-
-    //     this.setState({
-    //         errorString
-    //     });
-    // }
 
     render() {
 
