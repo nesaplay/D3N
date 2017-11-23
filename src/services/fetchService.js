@@ -7,9 +7,11 @@ export default class FetchService {
     headers() {
 
         let sessionId = sessionStorage.getItem(SESSION_STORAGE_KEY);
-        return (sessionId
-            ? {"Key": API_KEY, "Content-Type" : "application/json"}
-            : { "Key": API_KEY, "Content-Type" : "application/json"});
+
+        if (sessionId) {
+            return { "SessionId": sessionId, "Key": API_KEY, "Content-Type": "application/json" };
+        }
+        return { "Key": API_KEY, "Content-Type": "application/json" };
     }
 
     get(url, successHandler, errorHandler) {
@@ -20,7 +22,7 @@ export default class FetchService {
             headers: this.headers()
         })
             .then(response => successHandler(response.data))
-            .catch(error => errorHandler(error));
+            .catch(error => errorHandler(error.response));
     }
 
     post(url, postData, successHandler, errorHandler) {
