@@ -1,6 +1,6 @@
 import React from "react";
-import $ from 'jquery';
-import jqueryValidation from 'jquery-validation';
+import $ from "jquery";
+import jqueryValidation from "jquery-validation";
 
 export default class ValidationService {
 
@@ -81,14 +81,14 @@ export default class ValidationService {
     }
     validateLogin() {
 
-        if ($('#username').val() == '') {
-            $('#username').addClass('invalid');
-            $('#username').prop('aria-invalid', 'true');
+        if ($("#username").val() == "") {
+            $("#username").addClass("invalid");
+            $("#username").prop("aria-invalid", "true");
             return false;
         }
-        if ($('#password').val().length < 6) {
-            $('#password').addClass('invalid');
-            $('#password').prop('aria-invalid', 'true');
+        if ($("#password").val().length < 6) {
+            $("#password").addClass("invalid");
+            $("#password").prop("aria-invalid", "true");
             return false;
         }
         return true;
@@ -96,30 +96,30 @@ export default class ValidationService {
 
     validateRegister() {
 
-        if ($('#name').val() == '') {
-            $('#name').addClass('invalid');
-            $('#name').prop('aria-invalid', 'true');
+        if ($("#name").val() == "") {
+            $("#name").addClass("invalid");
+            $("#name").prop("aria-invalid", "true");
             return false;
         }
-        if ($('#username').val() == '') {
-            $('#username').addClass('invalid');
-            $('#username').prop('aria-invalid', 'true');
+        if ($("#username").val() == "") {
+            $("#username").addClass("invalid");
+            $("#username").prop("aria-invalid", "true");
             return false;
         }
         let reg = /\S+@\S+\.\S+/;
-        if (!reg.test($('#email').val())) {
-            $('#email').addClass('invalid');
-            $('#email').prop('aria-invalid', 'true');
+        if (!reg.test($("#email").val())) {
+            $("#email").addClass("invalid");
+            $("#email").prop("aria-invalid", "true");
             return false;
         }
-        if ($('#password').val().length < 6) {
-            $('#password').addClass('invalid');
-            $('#password').prop('aria-invalid', 'true');
+        if ($("#password").val().length < 6) {
+            $("#password").addClass("invalid");
+            $("#password").prop("aria-invalid", "true");
             return false;
         }
-        if ($('#confirm-password').val().toLowerCase() !== $('#password').val().toLowerCase()) {
-            $('#confirm-password').addClass('invalid');
-            $('#confirm-password').prop('aria-invalid', 'true');
+        if ($("#confirm-password").val().toLowerCase() !== $("#password").val().toLowerCase()) {
+            $("#confirm-password").addClass("invalid");
+            $("#confirm-password").prop("aria-invalid", "true");
             return false;
         }
         return true;
