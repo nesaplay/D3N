@@ -10,6 +10,7 @@ class Login extends React.Component {
         this.state = {
             usernameString: "",
             passwordString: "",
+            errorString: ""
         };
         this.authentication = new AuthenticationService();
         this.validation = new ValidationService();
@@ -33,18 +34,33 @@ class Login extends React.Component {
         });
     }
 
-    loginData() {
+    loginData(event) {
+        event.preventDefault();
+
         let userData = {
             username: this.state.usernameString,
             password: this.state.passwordString
         };
-        this.validation.ultimateValidation(userData);
-        if(this.validation.ultimateValidation(userData)) {
+
+        let check = this.validation.validateLogin();
+        if(check === true) {
             this.authentication.login(userData);
         }
     }
+    errorHandler(message){
+        
+        let errorString = sessionStorage.getItem("error");
+
+        this.setState({
+            errorString
+        });
+    }
 
     render() {
+
+        if(this.state.errorString) {
+            return <h2> {this.state.errorString}</h2>;
+        }        
 
         return (
             <div className="login/register-form  col s6 container row">
@@ -52,20 +68,25 @@ class Login extends React.Component {
                     <h3 className="col s6"><Link to="/login">Login</Link></h3>
                     <h3 className="col s6 "><Link to="/register">Register</Link></h3>
                 </div>
-                <form className="col s12" >
+                <form className="col s12" onSubmit={this.loginData} >
                     <div className="input-field col s12">
-                        <input id="username" onSubmit={this.submitFormHandler} type="text" value={this.state.emailString} />
+                        <input id="username" type="text" value={this.state.emailString} />
                         <label htmlFor="username">Username</label>
+                        <span className="helper-text" data-error="username is required" data-success="success"></span>
                     </div>
                     <div className="input-field col s12">
-                        <input id="pass" onChange={this.passwordChangeHandler} type="password" value={this.state.passwordString} />
-                        <label htmlFor="pass">Password</label>
+                        <input id="password" onChange={this.passwordChangeHandler} type="password" value={this.state.passwordString} />
+                        <label htmlFor="password">Password</label>
+                        <span className="helper-text" data-error="password need to be at least 6 char long" data-success="success"></span>
                     </div>
                     <div className="input-field col s12">
-                        <input onClick={this.loginData} type="submit" value="Login" className="btn waves-effect waves-light blue lighten-3" />
+                        <input  type="submit" value="Login" className="btn waves-effect waves-light blue lighten-3" />
                     </div>
 
                 </form>
+                {/* <div className="card-panel red darken-4 " >
+                    
+                </div> */}
 
             </div>
         );
