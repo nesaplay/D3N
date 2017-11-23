@@ -1,35 +1,64 @@
 import React from "react";
+import DataService from "../../services/dataService";
+import { IMG_PLACEHOLDER } from "../../constants";
 
 export default class Profile extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            profile: {
+                name: "loading...",
+                about: "loading...",
+                commentsCount: "0",
+                postsCount: "0",
+                avatarUrl: IMG_PLACEHOLDER
+            }
+        };
 
+        this.dataService = new DataService();
+        this.successProfile = this.successProfile.bind(this);
+    }
+    // personal methods
+    collectProfileInfo() {
+        this.dataService.fetchProfile(this.successProfile, this.errorProfile);
+    }
+
+    successProfile(profile) {
+        console.log(profile);
+
+        this.setState({ profile });
+    }
+
+    errorProfile(error) {
+    }
+
+    // lifecycle methods
+
+    componentDidMount() {
+        this.collectProfileInfo();
     }
 
 
     render() {
         return (
-            <main className="center container">
+            <main className="center">
                 <div>
-                    <img src="https://www.maintenanceconnection.com/website/wp-content/uploads/2014/10/slideshow-placeholder-300x300.jpg" alt="" className="circle responsive-img " />
+                    <img src={this.state.profile.avatarUrl} style={{"width": "300px"}}  alt="" className="circle responsive-img"/>
                 </div>
                 <div>
                     <h2 className="row col s4 offset-s4 ">
-                        Lorem ipsum
+                        {this.state.profile.name}
                     </h2>
                     <p className="row col s4 offset-s4">
-                        Lorem ipsum dolor sit amet, case omnes verterem an nam, sea ei summo semper moderatius. Mundi causae ne sed, vero altera omittam nam ei, solet pertinax forensibus in has. Cum at velit nonumy, qui te quodsi consequat, sea eu propriae lobortis. Vis probo utroque accusata an. At lorem meliore eum.
-
-                    Pri timeam sensibus constituam cu, cu sit dicit viris virtute. Propriae expetendis reformidans no ius, sea quod delenit eu. An assentior assueverit eum, pertinax philosophia cum ad, no qui utroque veritus. An has malis essent omittam.
-
+                        {this.state.profile.about}
                     </p>
                     <div className="chip col s3">
-                        number of posts
+                        number of posts ({this.state.profile.postsCount})
                         <i className=" material-icons"></i>
                     </div>
                     <div className="chip col s3">
-                        Comments
+                        Comments({this.state.profile.commentsCount})
                         <i className=" material-icons"></i>
                     </div>
                 </div>
