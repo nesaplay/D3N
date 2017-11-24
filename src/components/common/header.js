@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import AuthenticationService from "../services/authenticationService";
+import AuthenticationService from "../../services/authenticationService";
 
 class Header extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.authentication = new AuthenticationService();
-    // }
+    constructor(props) {
+        super(props);
+        this.authentication = new AuthenticationService();
+    }
     render() {
         return (
             <header className="teal lighten-1">
@@ -17,7 +17,7 @@ class Header extends Component {
                             <li><Link to="/feed">Feed</Link></li>
                             <li><Link to="/people">People</Link></li>
                             <li><Link to="/profile">Profile</Link></li>
-                            {/* <li><a onClick={this.authentication.logout()}>Logout </a> </li> */}
+                            <li><a onClick={this.authentication.logout}>Logout </a> </li>
                         </ul>
                     </div>
                 </nav>

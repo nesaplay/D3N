@@ -123,6 +123,38 @@ export default class ValidationService {
         }
         return true;
     }
+
+    validateEditProfile(){
+
+        if ($("#name").val() == "") {
+            $("#name").addClass("invalid");
+            $("#name").prop("aria-invalid", "true");
+            return false;
+        }
+        let reg = /\S+@\S+\.\S+/;
+        if (!reg.test($("#email").val())) {
+            $("#email").addClass("invalid");
+            $("#email").prop("aria-invalid", "true");
+            return false;
+        }
+        if ($("#about").val() == "") {
+            $("#about").addClass("invalid");
+            $("#about").prop("aria-invalid", "true");
+            return false;
+        }
+        if ($("#short-about").val() == "") {
+            $("#short-about").addClass("invalid");
+            $("#short-about").prop("aria-invalid", "true");
+            return false;
+        }
+        let url = /^(http|https):\/\//;
+        if (!url.test($("#avatar").val())) {
+            $("#avatar").addClass("invalid");
+            $("#avatar").prop("aria-invalid", "true");
+            return false;
+        }
+
+    }
 }
 
 
