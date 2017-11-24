@@ -1,6 +1,6 @@
 import React from "react";
 import FetchService from "../services/fetchService";
-import RedirectService from "../services/redirectService";
+import RedirectService from "./redirectService";
 import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from "../constants";
 
 export default class AuthenticationService {
@@ -14,11 +14,11 @@ export default class AuthenticationService {
 
     login(userData) {
         this.fetch.post("login", userData, this.successRequest, this.errorRequest);
-        // this.redirectToRoot.goTo("");
 
     }
     register(userData) {
         this.fetch.post("register", userData);
+        // window.location.assign("#/");
         this.redirectToRoot.goTo("");
     }
 
@@ -27,17 +27,21 @@ export default class AuthenticationService {
     logout() {
         sessionStorage.removeItem(SESSION_STORAGE_KEY);
 
-        this.redirectToRoot.goTo("");
+        // this.redirectToRoot.goTo("");
+        window.location.assign("#/");
     }
 
     successRequest(data) {
         sessionStorage.setItem(SESSION_STORAGE_KEY, data.sessionId);
-        this.redirectToRoot.goTo("/");
+        // this.redirectToRoot.goTo("profile");
+        window.location.assign("#/profile");
     }
 
     errorRequest(error) {
-
-        sessionStorage.setItem("error", error.response.data.error.message);
+        alert(error.response.data.error.message);
+        
+        
+       
     }
 
     isUserAuthenticated() {

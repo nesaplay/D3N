@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import AuthenticationService from "../../services/authenticationService";
 import ValidationService from "../../services/validationService";
 
+
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             usernameString: "",
             passwordString: "",
-            errorString: ""
         };
         this.authentication = new AuthenticationService();
         this.validation = new ValidationService();
@@ -18,6 +18,7 @@ class Login extends React.Component {
         this.usernameChangeHandler = this.usernameChangeHandler.bind(this);
         this.passwordChangeHandler = this.passwordChangeHandler.bind(this);
         this.loginData = this.loginData.bind(this);
+        // this.ErrorHandler = this.ErrorHandler.bind(this);
     }
     usernameChangeHandler(event) {
         const usernameString = event.target.value;
@@ -43,20 +44,22 @@ class Login extends React.Component {
         };
 
         let check = this.validation.validateLogin();
-        if(check === true) {
+        if (check === true) {
             this.authentication.login(userData);
-            if(this.authentication.login(userData)){
-                this.redirectToRoot.goTo("/profile");
-                // not sure about the if statement and redirection
-            }
+            
         }
     }
+    // ErrorHandler() {
+    //     console.log("radi errorHanler");
+    //     let errorString = this.authentication.errorRequest;
+    //     this.setState({
+    //         errorString
+    //     });
+    // }
+    
 
     render() {
 
-        // if(this.state.errorString) {
-        //     return <h2> {this.state.errorString}</h2>;
-        // }        
 
         return (
             <div className="login/register-form  col s6 container row">
@@ -65,6 +68,7 @@ class Login extends React.Component {
                     <h3 className="col s6 "><Link to="/register">Register</Link></h3>
                 </div>
                 <form className="col s12" onSubmit={this.loginData} >
+
                     <div className="input-field col s12">
                         <input id="username" type="text" onChange={this.usernameChangeHandler} value={this.state.emailString} />
                         <label htmlFor="username">Username</label>
@@ -76,13 +80,11 @@ class Login extends React.Component {
                         <span className="helper-text" data-error="password need to be at least 6 char long" data-success="success"></span>
                     </div>
                     <div className="input-field col s12">
-                        <input  type="submit" value="Login" className="btn waves-effect waves-light blue lighten-3" />
+                        <input type="submit" value="Login" className="btn waves-effect waves-light blue lighten-3" />
                     </div>
 
                 </form>
-                {/* <div className="card-panel red darken-4 " >
-                    
-                </div> */}
+
 
             </div>
         );

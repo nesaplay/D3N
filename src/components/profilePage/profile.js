@@ -1,8 +1,10 @@
 import React from "react";
+import Modal from "react-modal";
 
 import Profile from "../../entities/Profile";
 import DataService from "../../services/dataService";
 import { IMG_PLACEHOLDER } from "../../constants";
+import EditProfile from "../common/editProfile";
 
 
 export default class ProfilePage extends React.Component {
@@ -17,10 +19,10 @@ export default class ProfilePage extends React.Component {
                 commentsCount: "0",
                 postsCount: "0",
                 avatarUrl: IMG_PLACEHOLDER,
+                modalIsOpen: false,
                 email: "loading..."
             }
         };
-
         this.mockData = {
             name: "D3N Scrum Master",
             about: "The Boss",
@@ -33,7 +35,11 @@ export default class ProfilePage extends React.Component {
 
         this.mockProfile = new Profile(this.mockData);
         this.dataService = new DataService();
+
         this.successProfile = this.successProfile.bind(this);
+        this.openModal = this.openModal.bind(this);
+        // this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
     // personal methods
     collectProfileInfo() {
@@ -50,6 +56,15 @@ export default class ProfilePage extends React.Component {
     errorProfile(error) {
     }
 
+    openModal() {
+        this.setState({ modalIsOpen: true });
+    }
+
+    closeModal() {
+        this.setState({ modalIsOpen: false });
+    }
+
+
     updateTest() {
         this.dataService.updateProfile(this.mockProfile, this.updateSuccess, this.errorFailure);
     }
@@ -62,13 +77,11 @@ export default class ProfilePage extends React.Component {
         console.log("updating profile encountered an error: ...");
         console.log(error);
     }
-
     // lifecycle methods
 
     componentDidMount() {
         this.collectProfileInfo();
     }
-
 
     render() {
         return (
@@ -93,6 +106,16 @@ export default class ProfilePage extends React.Component {
                     </div>
                     <button onClick={this.updateTest} className="btn">MockUpdate</button>
                 </div>
+                <button className="btn" onClick={this.openModal}>Edit Profile</button>
+                <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onRequestClose={this.closeModal}
+                >
+                    <EditProfile />
+
+                </Modal>
+
+                {/* <a className="waves-effect waves-light btn">Edit Profile</a> */}
             </main>
         );
     }
