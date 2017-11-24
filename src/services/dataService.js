@@ -17,6 +17,10 @@ class DataService {
                 failure(error);
             });
     }
+
+    updateProfile(data, success, failure) {
+        this.fetch.put("Profiles", data, (response) => success(response), (error) => failure(error));
+    }
 }
 
 export default DataService;

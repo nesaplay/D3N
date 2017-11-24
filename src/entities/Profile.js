@@ -4,6 +4,7 @@ class Profile  {
         this.aboutShort = profile.aboutShort;
         this.avatarUrl = profile.avatarUrl;
         this.commentsCount = profile.commentsCount;
+        this.email = profile.email;
         this.name = profile.name;
         this.postsCount = profile.postsCount;
     }
