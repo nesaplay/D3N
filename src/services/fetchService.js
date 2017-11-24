@@ -41,4 +41,22 @@ export default class FetchService {
             .catch(error => errorHandler(error));
     }
 
+    put(url, postData, successHandler, errorHandler) {
+
+        // axios.post(`${BASE_URL}${url}`,postData,{  
+        //     headers: this.headers(),
+        // })
+
+        axios({
+            method: "put",
+            url: `${BASE_URL}${url}`,
+            data: postData,
+            headers: this.headers()
+        })
+            .then(response => successHandler(response.data))
+            .catch(error => errorHandler(error));
+    }
+
+    
+
 }
