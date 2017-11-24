@@ -1,5 +1,9 @@
 import React from "react";
 import ValidationService from "../../services/validationService";
+import DataService from "../../services/dataService";
+import Profile from "../../entities/Profile";
+import { IMG_PLACEHOLDER } from "../../constants";
+
 
 
 
@@ -9,19 +13,32 @@ class EditProfile extends React.Component {
 
         this.state = {
             nameString: "",
+            about: "",
             emailString: "",
             aboutString: "",
             shortAboutString: "",
-            avatarUrl: null
+            avatarUrl: ""
 
         };
         this.nameChangeHandler = this.nameChangeHandler.bind(this);
         this.emailChangeHandler = this.emailChangeHandler.bind(this);
         this.aboutChangeHandler = this.aboutChangeHandler.bind(this);
         this.shortAboutChangeHandler = this.shortAboutChangeHandler.bind(this);
+        this.avatarChangeHandler = this.avatarChangeHandler.bind(this);
+        this.updateSuccess = this.updateSuccess.bind(this);
 
-
+        this.dataService = new DataService();
         this.validation = new ValidationService(); 
+        
+    }
+
+    updateSuccess(answer) {
+        console.log("we have updated a profile: ...");
+        window.location.assign("#/profile");
+    }
+    errorFailure(error) {
+        console.log("updating profile encountered an error: ...");
+        console.log(error);
     }
 
     nameChangeHandler(event) {
@@ -52,7 +69,7 @@ class EditProfile extends React.Component {
             shortAboutString
         });
     }
-    avatarChangeHandler() {
+    avatarChangeHandler(event) {
         const avatarUrl = event.target.value;
 
         this.setState({
@@ -66,11 +83,14 @@ class EditProfile extends React.Component {
             name: this.state.nameString,
             email: this.state.emailString,
             about: this.state.aboutString,
-            shortAbout: this.state.shortAboutString,
+            aboutShort: this.state.shortAboutString,
             avatarUrl: this.state.avatarUrl,
 
         };
-        console.log(modalData);
+
+        let profile = new Profile(modalData);
+        console.log(profile);
+        this.dataService.updateProfile(profile, this.updateSuccess, this.errorFailure);        
         
 
 
@@ -106,7 +126,7 @@ class EditProfile extends React.Component {
                         <span className="helper-text" data-error="username is required" data-success="success"></span>
                     </div>
                     <div className="input-field col s12">
-                        <input id="avatar" type="text" className="validate" required="" onChange={this.avatarAboutChangeHandler} value={event.target.value} />
+                        <input id="avatar" type="text" className="validate" required="" onChange={this.avatarChangeHandler} value={event.target.value} />
                         <label htmlFor="avatar">AvatarUrl</label>
                         <span className="helper-text" data-error="avatar is required" data-success="success"></span>
                     </div>
