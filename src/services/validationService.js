@@ -154,6 +154,8 @@ export default class ValidationService {
             return false;
         }
 
+        return true;
+
     }
 }
 
