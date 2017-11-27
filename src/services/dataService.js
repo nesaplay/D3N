@@ -37,6 +37,16 @@ class DataService {
             }
         );
     }
+    fetchUsersById(id, success, failure) {
+        this.fetch.get(`users/${id}`,
+            profileData => {
+                const profile = new Profile(profileData);
+                success(profile);
+            },
+            error => {
+                failure(error);
+            });
+    }
 }
 
 export default DataService;

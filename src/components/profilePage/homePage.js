@@ -18,7 +18,8 @@ class HomePage extends React.Component {
                 <Header />
                 <Switch>
                     <Route path="/feed" component={Feed} />
-                    <Route path="/people" component={People} />
+                    <Route exact path="/people" component={People} />
+                    <Route path="/people/:id" component={ProfilePage} />
                     <Route path="/profile" component={ProfilePage} />
                     <Route exact path="/" component={ProfilePage} />
                 </Switch>
