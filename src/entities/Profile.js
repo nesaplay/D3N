@@ -8,10 +8,6 @@ class Profile  {
         this.name = profile.name;
         this.postsCount = profile.postsCount;
     }
-
-    info() {
-        return "This profile has: about, aboutShort, avatarUrl, commentsCount, name and postsCount";
-    }
 }
 
 export default Profile;
