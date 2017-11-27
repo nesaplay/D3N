@@ -57,6 +57,7 @@ export default class ProfilePage extends React.Component {
     }
 
     render() {
+        this.dataService.fetchUsers(users=> console.log(users));
         return (
             <main className="center">
                 <div>
