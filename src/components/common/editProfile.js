@@ -4,9 +4,6 @@ import DataService from "../../services/dataService";
 import Profile from "../../entities/Profile";
 import { IMG_PLACEHOLDER } from "../../constants";
 
-
-
-
 class EditProfile extends React.Component {
     constructor(props) {
         super(props);
