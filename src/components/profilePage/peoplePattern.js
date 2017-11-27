@@ -18,7 +18,7 @@ class PeoplePattern extends Component {
                         <h5 className="col s12">{name}</h5>
                         <p className="col s12">{aboutShort}</p>
                     </div>
-                    <p className="col s2">{lastPostDate}</p>
+                    <p className="col s2">{new Date(lastPostDate).toLocaleTimeString()}</p>
                 </div>
             </article>
         );

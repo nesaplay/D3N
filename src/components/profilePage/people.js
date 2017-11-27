@@ -1,34 +1,32 @@
 import React, { Component } from "react";
 
 import PeoplePattern from "./peoplePattern";
+import DataService from "../../services/dataService";
 
 class People extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            users: [
-                {
-                    id: "0",
-                    name: "Nevena",
-                    aboutShort: "short info about a user",
-                    lastPostDate: "5:12PM",
-                    avatarUrl: "http://www.brimmunication.com/wp-content/uploads/2017/10/b1b10971de1dbe384e7ceda07665a4af-100x100.png"
-
-
-                },
-                {
-                    id: "1",
-                    name: "Nevena",
-                    aboutShort: "short info about a user",
-                    lastPostDate: "5:12PM",
-                    avatarUrl: "http://www.brimmunication.com/wp-content/uploads/2017/10/b1b10971de1dbe384e7ceda07665a4af-100x100.png"
-
-
-                },
-            ]
+            users: []
         };
+
+        this.dataService = new DataService();
+        this.updateStateWithUsers = this.updateStateWithUsers.bind(this);
     }
+
+    componentDidMount() {
+        this.dataService.fetchUsers(this.updateStateWithUsers, this.handleError);
+    }
+
+    updateStateWithUsers(users) {
+        this.setState({ users });
+    }
+
+    handleError(error) {
+        // console.log(error);
+    }
+
 
     render() {
         return (
