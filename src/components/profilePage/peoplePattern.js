@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 
 class PeoplePattern extends Component {
     constructor(props) {
@@ -8,16 +8,18 @@ class PeoplePattern extends Component {
 
     render() {
 
-        const { name, shortAbout, avatarUrl, lastLogin } = this.props.user;
+        const { name, aboutShort, avatarUrl, lastPostDate, id } = this.props.user;
 
         return (
-            <article className="row teal lighten-5">
-                <img src={avatarUrl} className="col s2" />
-                <div className="col s8 row">
-                    <h5 className="col s12">{name}</h5>
-                    <p className="col s12">{shortAbout}</p>
+            <article className="section">
+                <div className=" row teal lighten-5">
+                    <img src={avatarUrl} className="col s2" />
+                    <div className="col s8 row">
+                        <h5 className="col s12">{name}</h5>
+                        <p className="col s12">{aboutShort}</p>
+                    </div>
+                    <p className="col s2">{lastPostDate}</p>
                 </div>
-                <p className="col s2">{lastLogin}</p>
             </article>
         );
     }
