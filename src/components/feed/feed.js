@@ -24,7 +24,7 @@ class Feed extends Component {
     initState() {
         return {
             posts: [],
-            modalIsOpen: false
+            modalIsOpen: false,
         };
     }
 
