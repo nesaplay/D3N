@@ -85,16 +85,15 @@ class EditProfile extends React.Component {
 
         };
 
-        let profile = new Profile(modalData);
-        console.log(profile);
-        this.dataService.updateProfile(profile, this.updateSuccess, this.errorFailure);        
+        let profile = new Profile(modalData); 
         
-
-
+        
+        
         let validateChecker = this.validation.validateEditProfile();
-        // if (validateChecker === true) {
-        //     this.authentication.register(userData);
-        // }
+        console.log(validateChecker);
+        if (validateChecker === true) {
+            this.dataService.updateProfile(profile, this.updateSuccess, this.errorFailure);        
+        }
     }
 
     render() {
