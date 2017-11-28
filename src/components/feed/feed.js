@@ -29,7 +29,6 @@ class Feed extends Component {
             videoContent: "",
             imageContent: "",
             modalType: ""
-
         };
     }
 
