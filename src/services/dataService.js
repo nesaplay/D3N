@@ -52,7 +52,6 @@ class DataService {
     fetchTextPosts(successHandler, errorHandler) {
         this.fetch.get("Posts",
             postData => {
-                console.log(postData);
                 const posts = postData.map(post => {
                     return new Post(post);
                 });
@@ -63,7 +62,15 @@ class DataService {
             }
 
         );
+    }
 
+    sendTextPost(data, successHandler, errorHandler) {
+        const post = new Post(data);
+        this.fetch.post("TextPosts", post, post => {
+            successHandler(post);
+        }, error => {
+            errorHandler(error);
+        });
     }
 }
 

@@ -7,6 +7,7 @@ class Profile  {
         this.email = profile.email;
         this.name = profile.name;
         this.postsCount = profile.postsCount;
+        this.userId = profile.userId;
     }
 }
 

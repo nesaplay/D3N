@@ -4,6 +4,9 @@ class Post  {
         this.text = post.text;
         this.type = post.type;
         this.commentsNum = post.commentsNum;
+        this.userId = post.userId;
+        this.dateCreated = post.dateCreated;
+        this.userDisplayName = post.userDisplayName;
         
     }
 }

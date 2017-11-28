@@ -21,7 +21,8 @@ export default class ProfilePage extends React.Component {
                 avatarUrl: IMG_PLACEHOLDER,
                 modalIsOpen: false,
                 email: "loading...",
-                error: ""
+                error: "",
+                userId: 0
             }
         };
         this.dataService = new DataService();
@@ -90,7 +91,7 @@ export default class ProfilePage extends React.Component {
     }
 
     render() {
-        console.log(this.props);
+        console.log(this.state);
         this.dataService.fetchUsers(users => console.log(users));
         return (
             <main className="center">
