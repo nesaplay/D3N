@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import PropTypes from "prop-types";
 
 import DataService from "../../services/dataService";
 import { IMG_PLACEHOLDER } from "../../constants";
@@ -19,11 +20,12 @@ export default class ProfilePage extends React.Component {
                 postsCount: "0",
                 avatarUrl: IMG_PLACEHOLDER,
                 modalIsOpen: false,
-                email: "loading..."
+                email: "loading...",
+                error: ""
             }
         };
         this.dataService = new DataService();
-        
+
         this.successProfile = this.successProfile.bind(this);
         this.openModal = this.openModal.bind(this);
         // this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -31,7 +33,12 @@ export default class ProfilePage extends React.Component {
     }
     // personal methods
     collectProfileInfo() {
-        this.dataService.fetchProfile(this.successProfile, this.errorProfile);
+        const userId = this.props.match.params.id;
+        if (!userId) {
+            this.dataService.fetchProfile(this.successProfile, this.errorProfile);
+            return;
+        }
+        this.dataService.fetchUsersById(userId, this.successProfile, this.errorProfile);
     }
 
     successProfile(profile) {
@@ -40,6 +47,10 @@ export default class ProfilePage extends React.Component {
     }
 
     errorProfile(error) {
+        this.setState({
+            error: error.message
+        }); //not sure will this work
+
     }
 
     openModal() {
@@ -50,6 +61,23 @@ export default class ProfilePage extends React.Component {
         this.setState({ modalIsOpen: false });
     }
 
+    renderModal() {
+        if (!this.props.match.params.id) {
+            return (
+                <article>
+                    <button className="btn" onClick={this.openModal}>Edit Profile</button>
+                    <Modal
+                        isOpen={this.state.modalIsOpen}
+                        onRequestClose={this.closeModal}
+                    >
+                        <EditProfile profile={this.newProfileData} />
+
+                    </Modal>
+                </article>
+            );
+        }
+    }
+
     // lifecycle methods
 
     componentDidMount() {
@@ -57,7 +85,8 @@ export default class ProfilePage extends React.Component {
     }
 
     render() {
-        this.dataService.fetchUsers(users=> console.log(users));
+        console.log(this.props);
+        this.dataService.fetchUsers(users => console.log(users));
         return (
             <main className="center">
                 <div>
@@ -79,18 +108,14 @@ export default class ProfilePage extends React.Component {
                         <i className=" material-icons"></i>
                     </div>
                 </div>
-                <button className="btn" onClick={this.openModal}>Edit Profile</button>
-                <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onRequestClose={this.closeModal}
-                >
-                    <EditProfile profile={this.newProfileData} />
-
-                </Modal>
-
+                {this.renderModal()}
                 {/* <a className="waves-effect waves-light btn">Edit Profile</a> */}
             </main>
         );
     }
 
 }
+
+ProfilePage.propTypes = {
+    match: PropTypes.object
+};
