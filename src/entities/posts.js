@@ -7,7 +7,8 @@ class Post  {
         this.userId = post.userId;
         this.dateCreated = post.dateCreated;
         this.userDisplayName = post.userDisplayName;
-        
+        this.imageUrl = post.imageUrl;
+        this.videoUrl = post.videoUrl; 
     }
 }
 
