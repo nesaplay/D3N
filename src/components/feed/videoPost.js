@@ -34,5 +34,3 @@ class VideoPost extends React.Component {
 // };
 
 export default VideoPost;
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_Dq8QnQtx5Y" frameborder="0" allowfullscreen></iframe>
