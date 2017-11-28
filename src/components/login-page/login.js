@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import AuthenticationService from "../../services/authenticationService";
 import ValidationService from "../../services/validationService";
+import Tabs from "./tabs";
 
 
 class Login extends React.Component {
@@ -62,11 +63,9 @@ class Login extends React.Component {
 
 
         return (
-            <div className="login/register-form  col s6 container row">
-                <div className="row">
-                    <h3 className="col s6"><Link to="/login">Login</Link></h3>
-                    <h3 className="col s6 "><Link to="/register">Register</Link></h3>
-                </div>
+            <div className="col s6 container row">
+
+                <Tabs/>
                 <form className="col s12" onSubmit={this.loginData} >
 
                     <div className="input-field col s12">

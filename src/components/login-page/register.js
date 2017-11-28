@@ -4,6 +4,7 @@ import { validate } from "jquery";
 
 import AuthenticationService from "../../services/authenticationService";
 import ValidationService from "../../services/validationService";
+import Tabs from "./tabs";
 
 class Register extends React.Component {
     constructor(props) {
@@ -83,12 +84,9 @@ class Register extends React.Component {
     render() {
 
         return (
-            <div className="login/register-form  col s6 container row">
+            <div className="col s6 container row">
 
-                <div className="row">
-                    <h3 className="col s6"><Link to="/login">Login</Link></h3>
-                    <h3 className="col s6"><Link to="/register">Register</Link></h3>
-                </div>
+                <Tabs/>
                 <form className="col s12" id="register-form" onSubmit={this.allRegisterData}>
                     <div className="input-field col s12">
                         <input id="name" type="text" required="" aria-required="" className="validate" onChange={this.nameChangeHandler} value={event.target.value} />

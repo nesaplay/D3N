@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FetchService from "./fetchService";
 import Profile from "../entities/Profile";
 import Users from "../entities/users";
+import Post from "../entities/posts";
 
 
 class DataService {
@@ -46,6 +47,20 @@ class DataService {
             error => {
                 failure(error);
             });
+    }
+
+    fetchTextPosts(successHandler, errorHandler) {
+        this.fetch.get("Posts",
+            postData => {
+                const post = new Post(postData);
+                successHandler(post);
+            },
+            error => {
+                errorHandler(error);
+            }
+
+        );
+
     }
 }
 

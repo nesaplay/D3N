@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Header from "../common/header";
-import Feed from "./feed";
+import Feed from "../feed/feed";
 import People from "./people";
 import ProfilePage from "./profile";
 
