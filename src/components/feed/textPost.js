@@ -1,5 +1,5 @@
 import React from "react";
-import DataService from "../../services/dataService";
+import PropTypes from "prop-types";
 
 class TextPost extends React.Component {
     constructor(props) {
@@ -12,41 +12,32 @@ class TextPost extends React.Component {
             }
         };
 
-        this.dataService = new DataService();
-
-        this.collectTextPosts = this.collectTextPosts.bind(this); 
-        this.successHandler = this.successHandler.bind(this); 
-        this.errorHandler = this.errorHandler.bind(this); 
     }
 
-    collectTextPosts(){
-        this.dataService.fetchTextPosts(this.successHandler, this.errorHandler);
-
-    }
-
-    successHandler(posts){
-        this.setState({
-            posts
-        });
-    }
-
-    errorHandler(error){
-        console.warn(error);
-    }
-
-    componentDidMount(){
-        this.collectTextPosts();
-    }
 
     render() {
         return (
-            <div>
-                <h4>
-                    {this.state.posts.text}
+            <div className="row teal lighten-3">
+                <h4 className="col s12">
+                    {this.props.post.text}
                 </h4>
+                <div className="col s6">
+                    <p className="left">
+                        {this.props.post.type} post
+                    </p>
+                </div>
+                <div className="col s6">
+                    <p className="right">
+                        {this.props.post.commentsNum} Comments
+                    </p>
+                </div>
             </div>
         );
     }
 }
+
+TextPost.propTypes = {
+    post: PropTypes.object
+};
 
 export default TextPost;

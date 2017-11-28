@@ -52,8 +52,11 @@ class DataService {
     fetchTextPosts(successHandler, errorHandler) {
         this.fetch.get("Posts",
             postData => {
-                const post = new Post(postData);
-                successHandler(post);
+                console.log(postData);
+                const posts = postData.map(post => {
+                    return new Post(post);
+                });
+                successHandler(posts);
             },
             error => {
                 errorHandler(error);

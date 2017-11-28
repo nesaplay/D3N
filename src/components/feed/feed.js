@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import TextPost from "./textPost";
+import DataService from "../../services/dataService";
+
 
 class Feed extends Component {
     constructor(props) {
         super(props);
 
         this.state = this.initState();
+        this.bindEventHandlers();
+        this.dataService = new DataService();        
     }
 
     // Initialization methods
     initState() {
         return {
-            posts: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]
+            posts: []
         };
     }
 
@@ -29,11 +33,34 @@ class Feed extends Component {
         });
     }
 
+    bindEventHandlers() {
+        this.fetchTextPosts = this.fetchTextPosts.bind(this); 
+        this.successHandler = this.successHandler.bind(this); 
+        this.errorHandler = this.errorHandler.bind(this); 
+    }
+
+    //Personal methods
+    
+    fetchTextPosts(){
+        this.dataService.fetchTextPosts(this.successHandler, this.errorHandler);
+
+    }
+
+    successHandler(posts){
+        this.setState({
+            posts
+        });
+    }
+
+    errorHandler(error){
+        console.warn(error);
+    }
+
     // Render methods
     displayPosts() {
         return this.state.posts.map(post =>
             <div className="section center" key={post.id}>
-                {/* <TextPost post={post} /> */} <div className="teal lighten-3">{post.id}</div>
+                <TextPost post={post} />
             </div>
         );
     }
@@ -74,10 +101,11 @@ class Feed extends Component {
     componentDidMount() {
         this.initDropdown();
         this.initPostButton();
+        this.fetchTextPosts();
     }
 
     render() {
-
+        console.table(this.state.posts);
         return (
             <main>
                 <div className="row container">
@@ -92,5 +120,6 @@ class Feed extends Component {
             </main>
         );
     }
+};
     
 export default Feed;
