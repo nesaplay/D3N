@@ -64,9 +64,9 @@ class DataService {
         );
     }
 
-    sendTextPost(data, successHandler, errorHandler) {
+    sendPost(data, successHandler, errorHandler) {
         const post = new Post(data);
-        this.fetch.post("TextPosts", post, post => {
+        this.fetch.post(`${post.type}Posts`, post, post => {
             successHandler(post);
         }, error => {
             errorHandler(error);
