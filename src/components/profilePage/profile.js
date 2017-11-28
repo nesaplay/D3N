@@ -28,11 +28,12 @@ export default class ProfilePage extends React.Component {
 
         this.successProfile = this.successProfile.bind(this);
         this.openModal = this.openModal.bind(this);
-        // this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.errorProfile = this.errorProfile.bind(this);
         this.closeModal = this.closeModal.bind(this);
     }
     // personal methods
     collectProfileInfo() {
+        // this.dataService.fetchTextPosts(this.successProfile, this.errorProfile);
         const userId = this.props.match.params.id;
         if (!userId) {
             this.dataService.fetchProfile(this.successProfile, this.errorProfile);
@@ -42,7 +43,11 @@ export default class ProfilePage extends React.Component {
     }
 
     successProfile(profile) {
-        // console.log(profile);
+        // if(profile.text){
+        //     console.log(profile);
+        //     return;
+        // }
+        
         this.setState({ profile });
     }
 

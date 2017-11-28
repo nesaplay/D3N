@@ -33,9 +33,7 @@ class People extends Component {
     }
 
     handleError(error) {
-        this.setState({
-            error: error.message
-        });
+        console.warn(error);
     }
 
     searchHandler(searchString) {

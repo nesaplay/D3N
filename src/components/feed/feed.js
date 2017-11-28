@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import TextPost from "./textPost";
 
 class Feed extends Component {
     constructor(props) {
@@ -92,6 +92,5 @@ class Feed extends Component {
             </main>
         );
     }
-}
-
+    
 export default Feed;
