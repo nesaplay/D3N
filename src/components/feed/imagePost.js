@@ -9,14 +9,15 @@ class ImagePost extends React.Component {
 
 
     render() {
+        console.log(this.props);
         return (
             <div className="row teal lighten-3">
-                <h4 className="col s12">
-                    image
-                    {/* {this.props.video.videoUrl} */}
-                </h4>
+                <div className="col s12">
+                    <img style={{ width: "300px" }} src={this.props.post.imageUrl} />
+
+                </div>
                 <div className="col s6">
-                    <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_hMWG1F75QWSu3hxuAGDyQoCvvP_T09rDxQ-05Y5Kj-LOv6IezA"/>
+                    <p className = "left">{this.props.post.type} post </p>
                 </div>
                 <div className="col s6">
                     <p className="right">
@@ -28,8 +29,8 @@ class ImagePost extends React.Component {
     }
 }
 
-// ImagePost.propTypes = {
-//     image: PropTypes.object
-// };
+ImagePost.propTypes = {
+    post: PropTypes.object
+};
 
 export default ImagePost;

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import TextPost from "./textPost";
+import VideoPost from "./videoPost";
+import ImagePost from "./imagePost";
 import DataService from "../../services/dataService";
 import Modal from "react-modal";
 
@@ -101,16 +103,16 @@ class Feed extends Component {
 
         if (this.state.modalType === "text") {
             data.text = this.state.postContent;
-            data.type = "Text";            
-        };    
+            data.type = "Text";
+        };
         if (this.state.modalType === "video") {
             data.videoUrl = this.state.videoContent;
-            data.type = "Video";                        
-        };    
+            data.type = "Video";
+        };
         if (this.state.modalType === "image") {
             data.imageUrl = this.state.imageContent;
-            data.type = "Image";            
-        };    
+            data.type = "Image";
+        };
 
         this.dataService.sendPost(data);
         this.closeModal();
@@ -118,10 +120,25 @@ class Feed extends Component {
 
     // Render methods
     displayPosts() {
-        return this.state.posts.map(post =>
-            <div className="section center" key={post.id}>
-                <TextPost post={post} />
-            </div>
+        return this.state.posts.map(post => {
+            if (post.type === "text") {
+                return (<div className="section center" key={post.id}>
+                    <TextPost post={post} />
+                </div>);
+            }
+            if (post.type === "video") {
+                return (<div className="section center" key={post.id}>
+                    <VideoPost post={post} />
+                </div>);
+            }
+            if (post.type === "image") {
+                return (<div className="section center" key={post.id}>
+                    <ImagePost post={post} />
+                </div>);
+            }
+
+        }
+
         );
     }
 
@@ -342,6 +359,7 @@ class Feed extends Component {
     }
 
     render() {
+        console.log(this.state.posts);
         return (
             <main>
                 <div className="row container">
