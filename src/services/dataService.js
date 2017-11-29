@@ -4,6 +4,8 @@ import Profile from "../entities/Profile";
 import Users from "../entities/users";
 import Post from "../entities/posts";
 
+import { SESSION_STORAGE_USER_KEY } from "../constants";
+
 
 class DataService {
     constructor() {
@@ -14,6 +16,7 @@ class DataService {
         this.fetch.get("profile",
             profileData => {
                 const profile = new Profile(profileData);
+                sessionStorage.setItem(SESSION_STORAGE_USER_KEY, profile.userId);
                 success(profile);
             },
             error => {
@@ -55,6 +58,20 @@ class DataService {
                 const posts = postData.map(post => {
                     return new Post(post);
                 });
+                successHandler(posts);
+            },
+            error => {
+                errorHandler(error);
+            }
+
+        );
+    }
+
+    fetchAnyPosts(postType, id, successHandler, errorHandler) {
+        this.fetch.get(`${postType}/${id}`,
+            postData => {
+                const posts = new Post(postData);
+                 
                 successHandler(posts);
             },
             error => {

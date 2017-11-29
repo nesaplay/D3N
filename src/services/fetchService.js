@@ -15,7 +15,6 @@ export default class FetchService {
     }
 
     get(url, successHandler, errorHandler) {
-
         axios({
             url: `${BASE_URL}${url}`,
             method: "get",
