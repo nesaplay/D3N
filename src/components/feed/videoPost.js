@@ -9,15 +9,16 @@ class VideoPost extends React.Component {
 
 
     render() {
+
+        const url = this.props.post.videoUrl;
+        const id = url.slice(-11);
         return (
             <div className="row teal lighten-3">
-                <h4 className="col s12">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/_Dq8QnQtx5Y" frameBorder="0" allowFullScreen></iframe>
-                </h4>
+                <div className="col s12">
+                    <iframe width="560" height="315" src={`https://www.youtube.com/embed/${id}`}  allowFullScreen></iframe>
+                </div>
                 <div className="col s6">
-                    <p className="left">
-                        Video Post
-                    </p>
+                    <p className="left">{this.props.post.type} post </p>
                 </div>
                 <div className="col s6">
                     <p className="right">
@@ -29,8 +30,8 @@ class VideoPost extends React.Component {
     }
 }
 
-// VideoPost.propTypes = {
-//     video: PropTypes.object
-// };
+VideoPost.propTypes = {
+    post: PropTypes.object
+};
 
 export default VideoPost;
