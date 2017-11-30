@@ -16,7 +16,6 @@ class TextPost extends React.Component {
 
     onDeleteButtonClick() {
         this.props.onPostDelete(this.props.post.id);
-
     }
 
 

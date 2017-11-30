@@ -90,9 +90,15 @@ export default class ProfilePage extends React.Component {
         this.collectProfileInfo();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.match.params.id != nextProps.match.params.id) {
+            this.dataService.fetchProfile(this.successProfile, this.errorProfile);
+        }
+    }
+
     render() {
-        console.log(this.state);
-        this.dataService.fetchUsers(users => console.log(users));
+        
+        // this.dataService.fetchUsers(users => console.log(users));
         return (
             <main className="center">
                 <div>

@@ -55,7 +55,7 @@ export default class FetchService {
     delete(url, successHandler, errorHandler) {
 
         axios({
-            method: "DELETE",
+            method: "delete",
             url: `${BASE_URL}${url}`,
             headers: this.headers()
         })
