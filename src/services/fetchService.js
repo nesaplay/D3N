@@ -26,10 +26,6 @@ export default class FetchService {
 
     post(url, postData, successHandler, errorHandler) {
 
-        // axios.post(`${BASE_URL}${url}`,postData,{  
-        //     headers: this.headers(),
-        // })
-
         axios({
             method: "post",
             url: `${BASE_URL}${url}`,

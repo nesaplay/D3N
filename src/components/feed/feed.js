@@ -114,8 +114,8 @@ class Feed extends Component {
             data.imageUrl = this.state.imageContent;
             data.type = "Image";
         };
-
-        this.dataService.sendPost(data);
+        // callback functios dont have a goal
+        this.dataService.sendPost(data,this.success,this.failure);
         this.closeModal();
     }
 
@@ -146,21 +146,21 @@ class Feed extends Component {
             if (this.state.filterType !== "all") {
                 if (post.type === "text" && this.state.filterType === "text") {
                     return (<div className="section center" key={post.id}>
-                        <Link to={`/feeds/${post.type}/${post.id}`} key={post.id}>
+                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <TextPost post={post} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "video" && this.state.filterType === "video") {
                     return (<div className="section center" key={post.id}>
-                        <Link to={`/feeds/${post.type}/${post.id}`} key={post.id}>
+                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <VideoPost post={post} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "image" && this.state.filterType === "image") {
                     return (<div className="section center" key={post.id}>
-                        <Link to={`/feeds/${post.type}/${post.id}`} key={post.id}>
+                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <ImagePost post={post} />
                         </Link>
                     </div>);
@@ -169,21 +169,21 @@ class Feed extends Component {
             } else {
                 if (post.type === "text") {
                     return (<div className="section center" key={post.id}>
-                        <Link to={`/feeds/${post.type}/${post.id}`} key={post.id}>
+                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <TextPost post={post} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "video") {
                     return (<div className="section center" key={post.id}>
-                        <Link to={`/feeds/${post.type}/${post.id}`} key={post.id}>
+                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <VideoPost post={post} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "image") {
                     return (<div className="section center" key={post.id}>
-                        <Link to={`/feeds/${post.type}/${post.id}`} key={post.id}>
+                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <ImagePost post={post} />
                         </Link>
                     </div>);

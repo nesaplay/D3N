@@ -71,7 +71,7 @@ class DataService {
         this.fetch.get(`${postType}/${id}`,
             postData => {
                 const posts = new Post(postData);
-                 
+
                 successHandler(posts);
             },
             error => {
@@ -89,6 +89,27 @@ class DataService {
             errorHandler(error);
         });
     }
-}
 
+    postComments(data, successHandler, errorHandler) {
+
+        this.fetch.post("Comments", data, post => {
+            successHandler(post);
+        }, error => {
+            errorHandler(error);
+        });
+    }
+
+    fetchCommentsPosts(successHandler, errorHandler) {
+        this.fetch.get("Comments",
+            CommentsData => {
+
+                successHandler(CommentsData);
+            },
+            error => {
+                errorHandler(error);
+            }
+
+        );
+    }
+}
 export default DataService;
