@@ -4,6 +4,8 @@ import Profile from "../entities/Profile";
 import Users from "../entities/users";
 import Post from "../entities/posts";
 
+import { SESSION_STORAGE_USER_KEY } from "../constants";
+
 
 class DataService {
     constructor() {
@@ -14,6 +16,7 @@ class DataService {
         this.fetch.get("profile",
             profileData => {
                 const profile = new Profile(profileData);
+                sessionStorage.setItem(SESSION_STORAGE_USER_KEY, profile.userId);
                 success(profile);
             },
             error => {
@@ -64,6 +67,20 @@ class DataService {
         );
     }
 
+    fetchAnyPosts(postType, id, successHandler, errorHandler) {
+        this.fetch.get(`${postType}/${id}`,
+            postData => {
+                const posts = new Post(postData);
+
+                successHandler(posts);
+            },
+            error => {
+                errorHandler(error);
+            }
+
+        );
+    }
+
     sendPost(data, successHandler, errorHandler) {
         const post = new Post(data);
         this.fetch.post(`${post.type}Posts`, post, post => {
@@ -72,7 +89,6 @@ class DataService {
             errorHandler(error);
         });
     }
-
     deletePost(id, successHandler, errorHandler) {
         this.fetch.delete(`Posts/${id}`, postdelete => {
             successHandler(postdelete);
@@ -82,4 +98,27 @@ class DataService {
     }
 }
 
+
+    postComments(data, successHandler, errorHandler) {
+
+        this.fetch.post("Comments", data, post => {
+            successHandler(post);
+        }, error => {
+            errorHandler(error);
+        });
+    }
+
+    fetchCommentsPosts(successHandler, errorHandler) {
+        this.fetch.get("Comments",
+            CommentsData => {
+
+                successHandler(CommentsData);
+            },
+            error => {
+                errorHandler(error);
+            }
+
+        );
+    }
+}
 export default DataService;
