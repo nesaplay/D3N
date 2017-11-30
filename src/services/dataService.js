@@ -72,6 +72,14 @@ class DataService {
             errorHandler(error);
         });
     }
+
+    deletePost(id, successHandler, errorHandler) {
+        this.fetch.delete(`Posts/${id}`, postdelete => {
+            successHandler(postdelete);
+        }, error => {
+            errorHandler(error);
+        });
+    }
 }
 
 export default DataService;

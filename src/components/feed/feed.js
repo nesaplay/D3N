@@ -4,6 +4,7 @@ import VideoPost from "./videoPost";
 import ImagePost from "./imagePost";
 import DataService from "../../services/dataService";
 import Modal from "react-modal";
+import { redirectService } from "../../services/redirectService";
 
 
 class Feed extends Component {
@@ -14,12 +15,8 @@ class Feed extends Component {
         this.bindEventHandlers();
         this.dataService = new DataService();
 
-        this.mockPost = {
-            text: "Vreme je za rucak",
-            userId: 183,
-            userDisplayName: "D3N Crew",
-            type: "text"
-        };
+        this.currentUser = {};
+        this.fetchMyProfile();        
     }
 
     // Initialization methods
@@ -56,14 +53,14 @@ class Feed extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.valueHandler = this.valueHandler.bind(this);
         this.submitForm = this.submitForm.bind(this);
-
+        this.isMyPost = this.isMyPost.bind(this);
+        this.deletePost = this.deletePost.bind(this);
     }
 
     //Personal methods
 
     fetchTextPosts() {
         this.dataService.fetchTextPosts(this.successHandler, this.errorHandler);
-
     }
 
     successHandler(posts) {
@@ -75,6 +72,7 @@ class Feed extends Component {
     errorHandler(error) {
         console.warn(error);
     }
+
     valueHandler(event) {
         if (event.target.id === "text") {
             this.setState({
@@ -93,6 +91,7 @@ class Feed extends Component {
         };
 
     }
+
     submitForm(event) {
         event.preventDefault();
 
@@ -118,12 +117,24 @@ class Feed extends Component {
         this.closeModal();
     }
 
+    isMyPost(post) {
+        return post.userId === this.currentUser.userId;
+    }
+
+    deletePost(postId) {
+        this.dataService.deletePost(postId,
+            postdelete =>
+                redirectService.goTo("/feed"),
+            error =>
+                console.log(error));
+    }
+
     // Render methods
     displayPosts() {
         return this.state.posts.map(post => {
             if (post.type === "text") {
                 return (<div className="section center" key={post.id}>
-                    <TextPost post={post} />
+                    <TextPost post={post} enableDelete={this.isMyPost(post)} onPostDelete={this.deletePost} />
                 </div>);
             }
             if (post.type === "video") {
@@ -358,8 +369,18 @@ class Feed extends Component {
         this.fetchTextPosts();
     }
 
+
+
+    fetchMyProfile() {
+        this.dataService.fetchProfile((userData) => {
+            this.currentUser = userData;
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
     render() {
-        console.log(this.state.posts);
+        console.log(this.currentUser);        
         return (
             <main>
                 <div className="row container">
