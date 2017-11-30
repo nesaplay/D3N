@@ -9,7 +9,6 @@ class ImagePost extends React.Component {
 
 
     render() {
-        console.log(this.props);
         return (
             <div className="row teal lighten-3">
                 <div className="col s12">

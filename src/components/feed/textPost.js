@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 class TextPost extends React.Component {
     constructor(props) {
         super(props);
-
+        this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
         this.state = {
             posts: {
                 text: "Loading post ...",
@@ -12,6 +12,11 @@ class TextPost extends React.Component {
             }
         };
 
+    }
+
+    onDeleteButtonClick() {
+        this.props.onPostDelete(this.props.post.id);
+        
     }
 
 
@@ -31,13 +36,16 @@ class TextPost extends React.Component {
                         {this.props.post.commentsNum} Comments
                     </p>
                 </div>
+                {this.props.enableDelete ? <button onClick={this.onDeleteButtonClick}>DELETE</button> : "" }
             </div>
         );
     }
 }
 
 TextPost.propTypes = {
-    post: PropTypes.object
+    post: PropTypes.object,
+    enableDelete: PropTypes.bool,
+    onPostDelete: PropTypes.func
 };
 
 export default TextPost;
