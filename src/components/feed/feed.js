@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import Modal from "react-modal";
-import { Link } from "react-router-dom";
-
 import TextPost from "./textPost";
 import VideoPost from "./videoPost";
 import ImagePost from "./imagePost";
@@ -19,8 +16,6 @@ class Feed extends Component {
         this.bindEventHandlers();
         this.dataService = new DataService();
 
-        this.currentUser = {};
-        this.fetchMyProfile();        
     }
 
     // Initialization methods
@@ -31,8 +26,7 @@ class Feed extends Component {
             postContent: "",
             videoContent: "",
             imageContent: "",
-            modalType: "",
-            filterType: "all"
+            modalType: ""
         };
     }
 
@@ -58,15 +52,8 @@ class Feed extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.valueHandler = this.valueHandler.bind(this);
         this.submitForm = this.submitForm.bind(this);
-
         this.isMyPost = this.isMyPost.bind(this);
         this.deletePost = this.deletePost.bind(this);
-
-        this.filterVideoPosts = this.filterVideoPosts.bind(this);
-        this.filterTextPosts = this.filterTextPosts.bind(this);
-        this.filterImagePosts = this.filterImagePosts.bind(this);
-        this.filterAllPosts = this.filterAllPosts.bind(this);
-
     }
 
     //Personal methods
@@ -108,7 +95,7 @@ class Feed extends Component {
         event.preventDefault();
 
         const data = {
-            userId: parseInt(sessionStorage.getItem(SESSION_STORAGE_USER_KEY)),
+            userId: 183,
             userDisplayName: "D3N",
         };
 
@@ -124,13 +111,15 @@ class Feed extends Component {
             data.imageUrl = this.state.imageContent;
             data.type = "Image";
         };
-        // callback functios dont have a goal
-        this.dataService.sendPost(data,this.success,this.failure);
+
+        this.dataService.sendPost(data);
         this.closeModal();
     }
 
     isMyPost(post) {
-        return post.userId === this.currentUser.userId;
+        const profileId = sessionStorage.getItem(SESSION_STORAGE_USER_KEY);
+
+        return parseInt(post.userId) === parseInt(profileId);
     }
 
     deletePost(postId) {
@@ -142,29 +131,8 @@ class Feed extends Component {
     }
 
     // Render methods
-    filterTextPosts() {
-        this.setState({
-            filterType: "text"
-        });
-    }
-    filterImagePosts() {
-        this.setState({
-            filterType: "image"
-        });
-    }
-    filterVideoPosts() {
-        this.setState({
-            filterType: "video"
-        });
-    }
-    filterAllPosts() {
-        this.setState({
-            filterType: "all"
-        });
-    }
     displayPosts() {
         return this.state.posts.map(post => {
-
             if (post.type === "text") {
                 return (<div className="section center" key={post.id}>
                     <TextPost post={post} enableDelete={this.isMyPost(post)} onPostDelete={this.deletePost} />
@@ -181,53 +149,6 @@ class Feed extends Component {
                 </div>);
             }
 
-            if (this.state.filterType !== "all") {
-                if (post.type === "text" && this.state.filterType === "text") {
-                    return (<div className="section center" key={post.id}>
-                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <TextPost post={post} />
-                        </Link>
-                    </div>);
-                }
-                if (post.type === "video" && this.state.filterType === "video") {
-                    return (<div className="section center" key={post.id}>
-                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <VideoPost post={post} />
-                        </Link>
-                    </div>);
-                }
-                if (post.type === "image" && this.state.filterType === "image") {
-                    return (<div className="section center" key={post.id}>
-                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <ImagePost post={post} />
-                        </Link>
-                    </div>);
-                }
-
-            } else {
-                if (post.type === "text") {
-                    return (<div className="section center" key={post.id}>
-                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <TextPost post={post} />
-                        </Link>
-                    </div>);
-                }
-                if (post.type === "video") {
-                    return (<div className="section center" key={post.id}>
-                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <VideoPost post={post} />
-                        </Link>
-                    </div>);
-                }
-                if (post.type === "image") {
-                    return (<div className="section center" key={post.id}>
-                        <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <ImagePost post={post} />
-                        </Link>
-                    </div>);
-                }
-
-            }
         }
 
         );
@@ -238,11 +159,11 @@ class Feed extends Component {
             <div className="section right">
                 <a className="dropdown-trigger btn" data-target="dropdown1">Filter Posts ⮟</a>
                 <ul id="dropdown1" className="dropdown-content">
-                    <li><a onClick={() => this.filterAllPosts()}>All posts</a></li>
+                    <li><a href="#">All posts</a></li>
                     <li className="divider"></li>
-                    <li><a onClick={() => this.filterTextPosts()}>Text posts</a></li>
-                    <li><a onClick={() => this.filterVideoPosts()}>Video posts</a></li>
-                    <li><a onClick={() => this.filterImagePosts()}>Image posts</a></li>
+                    <li><a href="#">Text posts</a></li>
+                    <li><a href="#">Video posts</a></li>
+                    <li><a href="#">Image posts</a></li>
                 </ul>
             </div>
         );
@@ -447,16 +368,6 @@ class Feed extends Component {
         this.initDropdown();
         this.initPostButton();
         this.fetchTextPosts();
-    }
-
-
-
-    fetchMyProfile() {
-        this.dataService.fetchProfile((userData) => {
-            this.currentUser = userData;
-        }, (error) => {
-            console.log(error);
-        });
     }
 
     render() {

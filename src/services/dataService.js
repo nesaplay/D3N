@@ -96,7 +96,6 @@ class DataService {
             errorHandler(error);
         });
     }
-}
 
 
     postComments(data, successHandler, errorHandler) {
