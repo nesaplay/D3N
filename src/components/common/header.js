@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+
 import AuthenticationService from "../../services/authenticationService";
 
-class Header extends Component {
+export default class Header extends Component {
     constructor(props) {
         super(props);
+
         this.authentication = new AuthenticationService();
     }
     render() {
@@ -25,5 +27,3 @@ class Header extends Component {
         );
     }
 }
-
-export default Header;

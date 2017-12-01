@@ -1,4 +1,4 @@
-class Profile  {
+export default class Profile  {
     constructor(profile) {
         this.about = profile.about;
         this.aboutShort = profile.aboutShort;
@@ -10,5 +10,3 @@ class Profile  {
         this.userId = profile.userId;
     }
 }
-
-export default Profile;

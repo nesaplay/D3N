@@ -1,13 +1,15 @@
 import React, { Component } from "react";
+import { SESSION_STORAGE_USER_KEY } from "../constants";
+
 import FetchService from "./fetchService";
 import Profile from "../entities/Profile";
-import Users from "../entities/users";
-import Post from "../entities/posts";
+import Users from "../entities/User";
+import Post from "../entities/Post";
 
-import { SESSION_STORAGE_USER_KEY } from "../constants";
 
 
 class DataService {
+
     constructor() {
         this.fetch = new FetchService();
     }
@@ -25,7 +27,11 @@ class DataService {
     }
 
     updateProfile(data, success, failure) {
-        this.fetch.put("Profiles", data, (response) => success(response), (error) => failure(error));
+        this.fetch.put("Profiles", data,
+            response =>
+                success(response),
+            error =>
+                failure(error));
     }
 
     fetchUsers(success, failure) {
@@ -41,6 +47,7 @@ class DataService {
             }
         );
     }
+
     fetchUsersById(id, success, failure) {
         this.fetch.get(`users/${id}`,
             profileData => {
@@ -63,7 +70,6 @@ class DataService {
             error => {
                 errorHandler(error);
             }
-
         );
     }
 
@@ -77,46 +83,49 @@ class DataService {
             error => {
                 errorHandler(error);
             }
-
         );
     }
 
     sendPost(data, successHandler, errorHandler) {
         const post = new Post(data);
-        this.fetch.post(`${post.type}Posts`, post, post => {
-            successHandler(post);
-        }, error => {
-            errorHandler(error);
-        });
+        this.fetch.post(`${post.type}Posts`, post,
+            post => {
+                successHandler(post);
+            },
+            error => {
+                errorHandler(error);
+            });
     }
     deletePost(id, successHandler, errorHandler) {
-        this.fetch.delete(`Posts/${id}`, postdelete => {
-            successHandler(postdelete);
-        }, error => {
-            errorHandler(error);
-        });
+        this.fetch.delete(`Posts/${id}`,
+            postdelete => {
+                successHandler(postdelete);
+            },
+            error => {
+                errorHandler(error);
+            });
     }
 
 
     postComments(data, successHandler, errorHandler) {
 
-        this.fetch.post("Comments", data, post => {
-            successHandler(post);
-        }, error => {
-            errorHandler(error);
-        });
+        this.fetch.post("Comments", data,
+            post => {
+                successHandler(post);
+            },
+            error => {
+                errorHandler(error);
+            });
     }
 
     fetchCommentsPosts(successHandler, errorHandler) {
         this.fetch.get("Comments",
             CommentsData => {
-
                 successHandler(CommentsData);
             },
             error => {
                 errorHandler(error);
             }
-
         );
     }
 }

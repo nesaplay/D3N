@@ -12,15 +12,12 @@ class App extends React.Component {
         this.authentication = new AuthenticationService();
     }
 
-
     render() {
 
-        return this.authentication.isUserAuthenticated() ? <HomePage /> : <LoginPage />;
-        // if (this.authentication.isUserAuthenticated()) {
-        //     return <MainPage />;
-        // }
+        return this.authentication.isUserAuthenticated() ?
+            <HomePage /> :
+            <LoginPage />;
 
-        // return <LoginPage />;
     }
 }
 
