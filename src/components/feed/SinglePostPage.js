@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { redirectService } from "../../services/redirectService";
 import DataService from "../../services/dataService";
 import CreateComments from "../comments/CreateComments";
+import SingleComments from "../comments/SingleComments";
 
 class SinglePostPage extends Component {
     constructor(props) {
@@ -14,9 +15,10 @@ class SinglePostPage extends Component {
                 videoUrl: "dasdasdasdasdasdasdadas"
             },
             type: "",
-            comments: ""
-        };
+            comments: "",
+            singleComments: []
 
+        };
         this.dataService = new DataService();
 
         this.findPosts = this.findPosts.bind(this);
@@ -25,10 +27,11 @@ class SinglePostPage extends Component {
         this.failure = this.failure.bind(this);
         this.whichRenderType = this.whichRenderType.bind(this);
         this.giveComments = this.giveComments.bind(this);
+        this.getAllComments = this.getAllComments.bind(this);
+        this.successComments = this.successComments.bind(this);
     }
 
     whichType() {
-        console.log("radi whichtype");
 
         let type = "";
         if (this.props.match.params.type == "text") {
@@ -36,8 +39,6 @@ class SinglePostPage extends Component {
 
 
         } else if (this.props.match.params.type == "video") {
-            console.log("radi find");
-            console.log(type);
             type = "VideoPosts";
 
 
@@ -50,40 +51,35 @@ class SinglePostPage extends Component {
     findPosts(type) {
 
         this.dataService.fetchAnyPosts(type, this.props.match.params.singleId, this.success, this.failure);
-        console.log("radi find");
     }
 
     success(post) {
         this.setState({
             post
         });
-        console.log("radi success");
-
-
+        console.log("Post object", this.state.post);
     }
 
     failure(error) {
         console.log(error);
     }
 
-    whichRenderType() {
-        console.log("radi whichRENDER");
-
-        if (this.props.match.params.type === "text") {
-            return <p>{this.state.post.text} </p>;
-
-        } else if (this.props.match.params.type === "video") {
-            console.log("radi" + this.state.post.videoUrl);
-            const url = this.state.post.videoUrl;
-            const id = url.slice(-11);
-            return (<iframe width="560" height="315" src={`https://www.youtube.com/embed/${id}`} allowFullScreen></iframe>);
-
-        } else if (this.props.match.params.type === "image") {
-            return (<img style={{ width: "300px" }} src={this.state.post.imageUrl} />);
-        }
+    getAllComments() {
+        console.log("3getallcomments" + this.props.match.params.singleId);
+        this.dataService.fetchCommentsPosts(this.props.match.params.singleId, this.successComments, this.failure);
     }
 
+    successComments(singleComments) {
+        console.log("4object" + this.singleComments);
+        this.setState({
+            singleComments
+        });
+        console.log("5state" + this.state.singleComments);
+    }
+
+    // radi post i get metode
     giveComments(comment) {
+        console.log("2prolazi give comments");
         const postId = this.state.post.id;
         const body = comment;
         const data = {
@@ -98,31 +94,54 @@ class SinglePostPage extends Component {
             no => {
                 console.log(no);
             });
+
+        this.getAllComments();
     }
 
-    componentDidMount() {
-        console.log("radi didmount");
 
+    whichRenderType() {
+
+
+        if (this.props.match.params.type === "text") {
+            return <p>{this.state.post.text} </p>;
+
+        } else if (this.props.match.params.type === "video") {
+            const url = this.state.post.videoUrl;
+            const id = url.slice(-11);
+            return (<iframe width="800px" height="450px" src={`https://www.youtube.com/embed/${id}`} allowFullScreen></iframe>);
+
+        } else if (this.props.match.params.type === "image") {
+            return (<img width="800px" src={this.state.post.imageUrl} />);
+        }
+    }
+
+
+    componentDidMount() {
+        this.getAllComments();
         this.whichType();
 
     }
 
     render() {
+        console.log(this.state.singleComments);
         return (
-            <div className="needMargin">
-                <div className="container row teal lighten-3">
+            <main className="needMargin">
+                <div className="container row">
                     <div className="col s12 center">
                         {this.whichRenderType()}
                     </div>
                 </div>
 
-                <CreateComments giveComments={this.giveComments} />
-                
+                <CreateComments giveComment={this.giveComments} />
+                {this.state.singleComments.map(comment => {
+
+                    return <SingleComments key={comment.id} date={comment.dateCreated} authorName={comment.authorName} body={comment.body} />;
+                })}
 
                 <div className="row container center">
 
                 </div>
-            </div>
+            </main>
         );
     }
 

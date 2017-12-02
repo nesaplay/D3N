@@ -1,7 +1,6 @@
 import axios from "axios";
 import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from "../constants";
 
-
 export default class FetchService {
 
     headers() {
@@ -38,10 +37,6 @@ export default class FetchService {
 
     put(url, postData, successHandler, errorHandler) {
 
-        // axios.post(`${BASE_URL}${url}`,postData,{  
-        //     headers: this.headers(),
-        // })
-
         axios({
             method: "put",
             url: `${BASE_URL}${url}`,
@@ -55,13 +50,12 @@ export default class FetchService {
     delete(url, successHandler, errorHandler) {
 
         axios({
-            method: "DELETE",
+            method: "delete",
             url: `${BASE_URL}${url}`,
             headers: this.headers()
         })
             .then(response => successHandler(response.data))
             .catch(error => errorHandler(error));
-
     }
 
 }

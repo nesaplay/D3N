@@ -8,7 +8,6 @@ export default class AuthenticationService {
 
         this.fetch = new FetchService();
         
-
     }
 
     login(userData) {
@@ -17,23 +16,17 @@ export default class AuthenticationService {
 
     register(userData) {
         this.fetch.post("register", userData);
-        // window.location.assign("#/");
         redirectService.goTo("/");
     }
 
-
-
     logout() {
         sessionStorage.removeItem(SESSION_STORAGE_KEY);
-
         redirectService.goTo("/");
-        // window.location.assign("#/");
     }
 
     successRequest(data) {
         sessionStorage.setItem(SESSION_STORAGE_KEY, data.sessionId);
         redirectService.goTo("/profile");
-        // window.location.assign("#/profile");
     }
 
     errorRequest(error) {

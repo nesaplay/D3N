@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import Header from "../common/header";
@@ -6,16 +6,16 @@ import Feed from "../feed/feed";
 import People from "./people";
 import ProfilePage from "./profile";
 import SinglePostPage from "../feed/SinglePostPage";
+import Footer from "../common/footer";
 
-
-class HomePage extends React.Component {
+export default class HomePage extends Component {
     constructor(props) {
         super(props);
     }
 
     render() {
         return (
-            <main>
+            <div>
                 <Header />
                 <Switch>
                     <Redirect exact from="/" to="/feed" />
@@ -25,9 +25,8 @@ class HomePage extends React.Component {
                     <Route path="/people/:id" component={ProfilePage} />
                     <Route path="/profile" component={ProfilePage} />
                 </Switch>
-            </main>
+                <Footer />
+            </div>
         );
     }
 }
-
-export default HomePage;
