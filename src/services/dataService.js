@@ -1,15 +1,19 @@
 import React, { Component } from "react";
+import { SESSION_STORAGE_USER_KEY } from "../constants";
+
 import FetchService from "./fetchService";
 import Profile from "../entities/Profile";
-import Users from "../entities/users";
-import Post from "../entities/posts";
+import User from "../entities/User";
+import Post from "../entities/Post";
 
-import { SESSION_STORAGE_USER_KEY } from "../constants";
 
 
 class DataService {
+
     constructor() {
         this.fetch = new FetchService();
+        this.top = 5;
+        this.skip = 0;
     }
 
     fetchProfile(success, failure) {
@@ -25,14 +29,18 @@ class DataService {
     }
 
     updateProfile(data, success, failure) {
-        this.fetch.put("Profiles", data, (response) => success(response), (error) => failure(error));
+        this.fetch.put("Profiles", data,
+            response =>
+                success(response),
+            error =>
+                failure(error));
     }
 
-    fetchUsers(success, failure) {
-        this.fetch.get("users",
+    fetchUsers(success, failure, top) {
+        this.fetch.get(`users?$top=${top}&$skip=${this.skip}`,
             usersData => {
                 const users = usersData.map(element => {
-                    return new Users(element);
+                    return new User(element);
                 });
                 success(users);
             },
@@ -41,6 +49,7 @@ class DataService {
             }
         );
     }
+
     fetchUsersById(id, success, failure) {
         this.fetch.get(`users/${id}`,
             profileData => {
@@ -63,7 +72,6 @@ class DataService {
             error => {
                 errorHandler(error);
             }
-
         );
     }
 
@@ -77,17 +85,18 @@ class DataService {
             error => {
                 errorHandler(error);
             }
-
         );
     }
 
     sendPost(data, successHandler, errorHandler) {
         const post = new Post(data);
-        this.fetch.post(`${post.type}Posts`, post, post => {
-            successHandler(post);
-        }, error => {
-            errorHandler(error);
-        });
+        this.fetch.post(`${post.type}Posts`, post,
+            post => {
+                successHandler(post);
+            },
+            error => {
+                errorHandler(error);
+            });
     }
 
     fetchCommentsPosts(postId, successHandler, errorHandler) {
@@ -105,22 +114,36 @@ class DataService {
     }
 
     deletePost(id, successHandler, errorHandler) {
-        this.fetch.delete(`Posts/${id}`, postdelete => {
-            successHandler(postdelete);
-        }, error => {
-            errorHandler(error);
-        });
+        this.fetch.delete(`Posts/${id}`,
+            postdelete => {
+                successHandler(postdelete);
+            },
+            error => {
+                errorHandler(error);
+            });
     }
 
 
     postComments(data, successHandler, errorHandler) {
 
-        this.fetch.post("Comments", data, post => {
-            successHandler(post);
-        }, error => {
-            errorHandler(error);
-        });
+        this.fetch.post("Comments", data,
+            post => {
+                successHandler(post);
+            },
+            error => {
+                errorHandler(error);
+            });
     }
 
+    fetchCommentsPosts(successHandler, errorHandler) {
+        this.fetch.get("Comments",
+            CommentsData => {
+                successHandler(CommentsData);
+            },
+            error => {
+                errorHandler(error);
+            }
+        );
+    }
 }
 export default DataService;

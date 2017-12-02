@@ -11,7 +11,15 @@ export default class ProfilePage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.state = this.initState();
+        this.bindEventHandlers();
+        this.createInstances();
+    }
+
+    // Initialization methods
+
+    initState() {
+        return {
             profile: {
                 name: "loading...",
                 about: "loading...",
@@ -25,16 +33,21 @@ export default class ProfilePage extends React.Component {
                 userId: 0
             }
         };
-        this.dataService = new DataService();
+    }
 
+    bindEventHandlers() {
         this.successProfile = this.successProfile.bind(this);
         this.openModal = this.openModal.bind(this);
         this.errorProfile = this.errorProfile.bind(this);
         this.closeModal = this.closeModal.bind(this);
     }
+
+    createInstances() {
+        this.dataService = new DataService();        
+    }
+
     // personal methods
     collectProfileInfo() {
-        // this.dataService.fetchTextPosts(this.successProfile, this.errorProfile);
         const userId = this.props.match.params.id;
         if (!userId) {
             this.dataService.fetchProfile(this.successProfile, this.errorProfile);
@@ -44,11 +57,6 @@ export default class ProfilePage extends React.Component {
     }
 
     successProfile(profile) {
-        // if(profile.text){
-        //     console.log(profile);
-        //     return;
-        // }
-
         this.setState({ profile });
     }
 
@@ -56,7 +64,6 @@ export default class ProfilePage extends React.Component {
         this.setState({
             error: error.message
         }); //not sure will this work
-
     }
 
     openModal() {
@@ -66,6 +73,21 @@ export default class ProfilePage extends React.Component {
     closeModal() {
         this.setState({ modalIsOpen: false });
     }
+
+    // lifecycle methods
+
+    componentDidMount() {
+        this.collectProfileInfo();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // in case we navigate from /people/:id page to /profile
+        if (this.props.match.params.id != nextProps.match.params.id) {
+            this.dataService.fetchProfile(this.successProfile, this.errorProfile);
+        }
+    }
+
+    // Render methods 
 
     renderModal() {
         if (!this.props.match.params.id) {
@@ -84,50 +106,37 @@ export default class ProfilePage extends React.Component {
         }
     }
 
-    // lifecycle methods
-
-    componentDidMount() {
-        this.collectProfileInfo();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.match.params.id != nextProps.match.params.id) {
-            this.dataService.fetchProfile(this.successProfile, this.errorProfile);
-        }
-    }
-
     render() {
-
-        // this.dataService.fetchUsers(users => console.log(users));
+        
+        const { avatarUrl, name, about, postsCount, commentsCount } = this.state.profile;
+        
         return (
             <main className="center profilePage">
                 <div>
-                    <img src={this.state.profile.avatarUrl} style={{ "width": "300px", "marginTop": "20px" }} alt="" className="circle responsive-img" />
+                    <img src={avatarUrl} style={{ "width": "300px", "marginTop": "20px" }} alt="" className="circle responsive-img" />
                 </div>
                 <div>
                     <h2 className="row col s4 offset-s4 ">
-                        {this.state.profile.name}
+                        {name}
                     </h2>
                     <p className="row col s4 offset-s4">
-                        {this.state.profile.about}
+                        {about}
                     </p>
                     <div className="chip col s3">
-                        number of posts ({this.state.profile.postsCount})
+                        number of posts ({postsCount})
                         <i className=" material-icons"></i>
                     </div>
                     <div className="chip col s3">
-                        Comments({this.state.profile.commentsCount})
+                        Comments({commentsCount})
                         <i className=" material-icons"></i>
                     </div>
                 </div>
                 <div className="col s12 section">
                     {this.renderModal()}
                 </div>
-                {/* <a className="waves-effect waves-light btn">Edit Profile</a> */}
             </main>
         );
     }
-
 }
 
 ProfilePage.propTypes = {

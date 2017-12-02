@@ -1,6 +1,4 @@
-import { SESSION_STORAGE_USER_KEY } from "../constants";
-
-class Post  {
+export default class Post  {
     constructor(post) {
         this.id = post.id;
         this.text = post.text;
@@ -13,5 +11,3 @@ class Post  {
         this.videoUrl = post.videoUrl; 
     }
 }
-
-export default Post;

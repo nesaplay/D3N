@@ -1,11 +1,12 @@
-import React from "react";
+import React, {Component} from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+
 import Welcome from "./welcome";
 import Login from "./login";
 import Register from "./register";
 
-import { Switch, Route, Redirect } from "react-router-dom";
 
-class LoginPage extends React.Component {
+class LoginPage extends Component {
     constructor(props) {
         super(props);
     }
