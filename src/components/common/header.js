@@ -10,7 +10,7 @@ export default class Header extends Component {
         this.authentication = new AuthenticationService();
     }
     componentDidMount() {
-        var elem = document.querySelector('.sidenav');
+        var elem = document.querySelector(".sidenav");
         var instance = new M.Sidenav(elem);
     }
 

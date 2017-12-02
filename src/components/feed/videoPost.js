@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 class VideoPost extends React.Component {
     constructor(props) {
         super(props);
+        this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
+        
+    }
 
+    onDeleteButtonClick() {
+        this.props.onPostDelete(this.props.post.id);
     }
 
 
@@ -27,13 +32,18 @@ class VideoPost extends React.Component {
                         Comments: {this.props.post.commentsNum}
                     </p>
                 </div>
+                <div className="col s12">
+                    {this.props.enableDelete ? <button className="btn small center" onClick={this.onDeleteButtonClick}>DELETE</button> : ""}
+                </div>
             </div>
         );
     }
 }
 
 VideoPost.propTypes = {
-    post: PropTypes.object
+    post: PropTypes.object,
+    enableDelete: PropTypes.bool,
+    onPostDelete: PropTypes.func
 };
 
 export default VideoPost;

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 class TextPost extends React.Component {
     constructor(props) {
         super(props);
+        
         this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
         this.state = {
             posts: {
