@@ -3,7 +3,7 @@ import { SESSION_STORAGE_USER_KEY } from "../constants";
 
 import FetchService from "./fetchService";
 import Profile from "../entities/Profile";
-import Users from "../entities/User";
+import User from "../entities/User";
 import Post from "../entities/Post";
 
 
@@ -12,6 +12,8 @@ class DataService {
 
     constructor() {
         this.fetch = new FetchService();
+        this.top = 5;
+        this.skip = 0;
     }
 
     fetchProfile(success, failure) {
@@ -34,11 +36,11 @@ class DataService {
                 failure(error));
     }
 
-    fetchUsers(success, failure) {
-        this.fetch.get("users",
+    fetchUsers(success, failure, top) {
+        this.fetch.get(`users?$top=${top}&$skip=${this.skip}`,
             usersData => {
                 const users = usersData.map(element => {
-                    return new Users(element);
+                    return new User(element);
                 });
                 success(users);
             },
