@@ -10,9 +10,9 @@ class ImagePost extends React.Component {
 
     render() {
         return (
-            <div className="row teal lighten-3">
-                <div className="col s12">
-                    <img style={{ width: "300px" }} src={this.props.post.imageUrl} />
+            <main className="row image-container">
+                <div className="col s12 imgDiv">
+                    <img className="responsive-img" src={this.props.post.imageUrl} />
 
                 </div>
                 <div className="col s6">
@@ -20,10 +20,10 @@ class ImagePost extends React.Component {
                 </div>
                 <div className="col s6">
                     <p className="right">
-                        Comments
+                        Comments: {this.props.post.commentsNum}
                     </p>
                 </div>
-            </div>
+            </main>
         );
     }
 }

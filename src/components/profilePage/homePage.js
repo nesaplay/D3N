@@ -6,6 +6,7 @@ import Feed from "../feed/feed";
 import People from "./people";
 import ProfilePage from "./profile";
 import SinglePostPage from "../feed/SinglePostPage";
+import Footer from "../common/footer";
 
 
 class HomePage extends React.Component {
@@ -15,7 +16,7 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <main>
+            <div>
                 <Header />
                 <Switch>
                     <Redirect exact from="/" to="/feed" />
@@ -25,7 +26,8 @@ class HomePage extends React.Component {
                     <Route path="/people/:id" component={ProfilePage} />
                     <Route path="/profile" component={ProfilePage} />
                 </Switch>
-            </main>
+                <Footer />
+            </div>
         );
     }
 }

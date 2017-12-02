@@ -1,3 +1,48 @@
 .needMargin{
     margin-top: 2em;
 }
+.imgDiv{
+   min-height: 500px;
+
+}
+.menu{
+    background-color: #420c75;
+}
+.app{
+    background-color: #d6d3d3;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#d6d3d3));
+    background-image: -webkit-linear-gradient(top, #fff, #d6d3d3);
+    background-image: -moz-linear-gradient(top, #fff, #d6d3d3);
+    background-image: linear-gradient(to bottom, #fff, #d6d3d3);
+}
+.profilePage{
+    min-height: 800px;
+}
+/* footer{
+    min-height: 70px;
+    background-color: #420c75;
+    color: white;
+    text-align: center;
+    padding: 50px;
+} */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    font-weight: 300;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+  .addBtn{
+    background-color: #df3923;
+  }
+  .addBtn:hover{
+      background-color: #420c75;
+  }
+  .commentDiv{
+      width:60%;
+      background-color:#d6d3d3;
+      border-radius: 5%;
+  }

@@ -48,7 +48,7 @@ export default class ProfilePage extends React.Component {
         //     console.log(profile);
         //     return;
         // }
-        
+
         this.setState({ profile });
     }
 
@@ -71,7 +71,7 @@ export default class ProfilePage extends React.Component {
         if (!this.props.match.params.id) {
             return (
                 <article>
-                    <button className="btn" onClick={this.openModal}>Edit Profile</button>
+                    <button className="btn red" onClick={this.openModal}>Edit Profile</button>
                     <Modal
                         isOpen={this.state.modalIsOpen}
                         onRequestClose={this.closeModal}
@@ -97,10 +97,10 @@ export default class ProfilePage extends React.Component {
     }
 
     render() {
-        
+
         // this.dataService.fetchUsers(users => console.log(users));
         return (
-            <main className="center">
+            <main className="center profilePage">
                 <div>
                     <img src={this.state.profile.avatarUrl} style={{ "width": "300px", "marginTop": "20px" }} alt="" className="circle responsive-img" />
                 </div>
@@ -120,7 +120,9 @@ export default class ProfilePage extends React.Component {
                         <i className=" material-icons"></i>
                     </div>
                 </div>
-                {this.renderModal()}
+                <div className="col s12 section">
+                    {this.renderModal()}
+                </div>
                 {/* <a className="waves-effect waves-light btn">Edit Profile</a> */}
             </main>
         );

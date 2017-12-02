@@ -89,6 +89,21 @@ class DataService {
             errorHandler(error);
         });
     }
+
+    fetchCommentsPosts(postId, successHandler, errorHandler) {
+        this.fetch.get(`Comments?postId=${postId}`,
+            CommentsData => {
+                console.log(CommentsData);
+                successHandler(CommentsData);
+            },
+            error => {
+                console.log("fetchComments error" + error);
+                errorHandler(error);
+            }
+
+        );
+    }
+
     deletePost(id, successHandler, errorHandler) {
         this.fetch.delete(`Posts/${id}`, postdelete => {
             successHandler(postdelete);
@@ -107,17 +122,5 @@ class DataService {
         });
     }
 
-    fetchCommentsPosts(successHandler, errorHandler) {
-        this.fetch.get("Comments",
-            CommentsData => {
-
-                successHandler(CommentsData);
-            },
-            error => {
-                errorHandler(error);
-            }
-
-        );
-    }
 }
 export default DataService;

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-class SingleComponent extends Component {
+
+class SingleComments extends Component {
     constructor(props) {
         super(props);
 
@@ -14,22 +16,28 @@ class SingleComponent extends Component {
                 authorId: 0
             }
         };
-
-
     }
     render() {
         return (
-            <div className="row">
-                <p className="col s12">
-                
+            <div className="row container commentDiv">
 
-                </p>
+                <div className="col s6">
+                    <strong> {this.props.authorName}</strong> {this.props.body}
+                </div>
 
-
+                <div className="col s6">
+                    {this.props.date}
+                </div>
             </div>
         );
     }
 }
 
 
-export default SingleComponent;
+export default SingleComments;
+
+SingleComments.propTypes = {
+    authorName: PropTypes.string,
+    body: PropTypes.string,
+    date: PropTypes.string
+};

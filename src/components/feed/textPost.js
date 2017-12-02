@@ -21,7 +21,7 @@ class TextPost extends React.Component {
 
     render() {
         return (
-            <div className="row teal lighten-3">
+            <div className="row">
                 <h4 className="col s12">
                     {this.props.post.text}
                 </h4>

@@ -13,16 +13,18 @@ class VideoPost extends React.Component {
         const url = this.props.post.videoUrl;
         const id = url.slice(-11);
         return (
-            <div className="row teal lighten-3">
-                <div className="col s12">
-                    <iframe width="560" height="315" src={`https://www.youtube.com/embed/${id}`}  allowFullScreen></iframe>
+            <div className="row " >
+                <div className="video-container">
+                    <div className="col s12 ">
+                        <iframe src={`https://www.youtube.com/embed/${id}`} allowFullScreen></iframe>
+                    </div>
                 </div>
                 <div className="col s6">
                     <p className="left">{this.props.post.type} post </p>
                 </div>
                 <div className="col s6">
                     <p className="right">
-                        Comments
+                        Comments: {this.props.post.commentsNum}
                     </p>
                 </div>
             </div>

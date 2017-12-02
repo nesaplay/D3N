@@ -167,21 +167,21 @@ class Feed extends Component {
         return this.state.posts.map(post => {
             if (this.state.filterType !== "all") {
                 if (post.type === "text" && this.state.filterType === "text") {
-                    return (<div className="section center" key={post.id}>
+                    return (<div className="section center card-panel hoverable" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <TextPost onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)} post={post} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "video" && this.state.filterType === "video") {
-                    return (<div className="section center" key={post.id}>
+                    return (<div className="section center card-panel" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <VideoPost post={post} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "image" && this.state.filterType === "image") {
-                    return (<div className="section center" key={post.id}>
+                    return (<div className="section center card-panel hoverable" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <ImagePost post={post} />
                         </Link>
@@ -190,21 +190,21 @@ class Feed extends Component {
 
             } else {
                 if (post.type === "text") {
-                    return (<div className="section center" key={post.id}>
+                    return (<div className="section center card-panel" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <TextPost onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)} post={post} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "video") {
-                    return (<div className="section center" key={post.id}>
+                    return (<div className="section center card-panel" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <VideoPost post={post} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "image") {
-                    return (<div className="section center" key={post.id}>
+                    return (<div className="section center card-panel" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <ImagePost post={post} />
                         </Link>
@@ -219,8 +219,8 @@ class Feed extends Component {
 
     displayFilter() {
         return (
-            <div className="section right">
-                <a className="dropdown-trigger btn" data-target="dropdown1">Filter Posts ⮟</a>
+            <div className="section right ">
+                <a className="dropdown-trigger btn red" data-target="dropdown1">Filter Posts ⮟</a>
                 <ul id="dropdown1" className="dropdown-content">
                     <li><a onClick={() => this.filterAllPosts()}>All posts</a></li>
                     <li className="divider"></li>

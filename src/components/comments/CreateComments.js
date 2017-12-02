@@ -10,17 +10,18 @@ class CreateComments extends Component {
             comments: ""
         };
 
-        this.createCommentsHandler = this.createCommentsHandler.bind(this); 
+        this.createCommentsHandler = this.createCommentsHandler.bind(this);
         this.sendComments = this.sendComments.bind(this);
     }
 
     sendComments(e) {
-        e.preventDefault();
+        console.log("1sendComments");
+        // e.preventDefault();
 
         const comment = this.state.comments;
 
-        this.props.giveComments(comment);
-        
+        this.props.giveComment(comment);
+
     }
 
     createCommentsHandler(event) {
@@ -31,7 +32,7 @@ class CreateComments extends Component {
         });
     }
 
-    
+
     render() {
         return (
 
@@ -42,7 +43,9 @@ class CreateComments extends Component {
                     <span className="helper-text" ></span>
                 </div>
                 <div className="col s3">
-                    <input onClick={this.sendComments} type="submit" value="Send" className="btn waves-effect waves-light blue lighten-2" />
+                    <button onClick={this.sendComments} type="submit"  className="btn waves-effect waves-light red" >
+                    Send
+                    </button>
                 </div>
             </div>
 
@@ -53,5 +56,5 @@ class CreateComments extends Component {
 export default CreateComments;
 
 CreateComments.propTypes = {
-    giveComments: PropTypes.func
+    giveComment: PropTypes.func
 };
