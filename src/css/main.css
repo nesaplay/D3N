@@ -9,12 +9,19 @@
     background-color: #420c75;
 }
 .app{
+    min-height: 100vh;
     background-color: #d6d3d3;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#d6d3d3));
-    background-image: -webkit-linear-gradient(top, #fff, #d6d3d3);
-    background-image: -moz-linear-gradient(top, #fff, #d6d3d3);
-    background-image: linear-gradient(to bottom, #fff, #d6d3d3);
-}
+    background:  
+    
+    linear-gradient(
+      rgba(2, 0, 200, 0.8), 
+      rgba(2, 0, 200, 0.8)
+    ), url("https://ak0.picdn.net/shutterstock/videos/2709440/thumb/1.jpg") no-repeat center center fixed; 
+    background-size: cover;
+  }
+  .white-text{
+    color:white;
+  }
 .profilePage{
     min-height: 800px;
 }
