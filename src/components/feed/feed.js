@@ -6,7 +6,7 @@ import DataService from "../../services/dataService";
 import Modal from "react-modal";
 import { redirectService } from "../../services/redirectService";
 import { SESSION_STORAGE_USER_KEY } from "../../constants";
-
+import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 
 class Feed extends Component {
@@ -27,7 +27,9 @@ class Feed extends Component {
             videoContent: "",
             imageContent: "",
             modalType: "",
-            filterType: "all"
+            filterType: "all",
+            hasMore: true,
+            postCount: 10
         };
     }
 
@@ -46,7 +48,7 @@ class Feed extends Component {
     }
 
     createInstances() {
-        this.dataService = new DataService();        
+        this.dataService = new DataService();
     }
 
     bindEventHandlers() {
@@ -64,8 +66,13 @@ class Feed extends Component {
 
     //Personal methods
 
-    fetchTextPosts() {
-        this.dataService.fetchTextPosts(this.successHandler, this.errorHandler);
+    fetchTextPosts(page) {
+        console.log("This is page ", page);
+        this.dataService.fetchTextPosts(this.successHandler, this.errorHandler, page * 5);
+
+        if (this.state.posts.length >= this.state.postCount) {
+            this.setState({ hasMore: false});
+        }
     }
 
     successHandler(posts) {
@@ -156,14 +163,14 @@ class Feed extends Component {
                 if (post.type === "video" && this.state.filterType === "video") {
                     return (<div className="section center card-panel" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <VideoPost post={post} onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)}/>
+                            <VideoPost post={post} onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "image" && this.state.filterType === "image") {
                     return (<div className="section center card-panel hoverable" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <ImagePost post={post} onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)}/>
+                            <ImagePost post={post} onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)} />
                         </Link>
                     </div>);
                 }
@@ -178,14 +185,14 @@ class Feed extends Component {
                 if (post.type === "video") {
                     return (<div className="section center card-panel" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <VideoPost post={post} onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)}/>
+                            <VideoPost post={post} onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)} />
                         </Link>
                     </div>);
                 }
                 if (post.type === "image") {
                     return (<div className="section center card-panel" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
-                            <ImagePost post={post} onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)}/>
+                            <ImagePost post={post} onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)} />
                         </Link>
                     </div>);
                 }
@@ -407,16 +414,27 @@ class Feed extends Component {
     componentDidMount() {
         this.initDropdown();
         this.initPostButton();
-        this.fetchTextPosts();
+    }
+    
+    componentWillMount() {
+        this.dataService.fetchPostCount(postCount => this.setState({ postCount }));
     }
 
     render() {
-        console.log(this.state.posts);
+
         return (
             <main>
                 <div className="row container">
                     <div className="col s9">
-                        {this.displayPosts()}
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={this.fetchTextPosts}
+                            hasMore={this.state.hasMore}
+                            loader={<div className="loader">Loading ...</div>}
+                            useWindow={true}
+                        >
+                            {this.displayPosts()}
+                        </InfiniteScroll>
                         {this.displayModal()}
                     </div>
                     <div className="col s3">

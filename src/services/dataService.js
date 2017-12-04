@@ -12,7 +12,7 @@ class DataService {
 
     constructor() {
         this.fetch = new FetchService();
-        this.top = 5;
+        this.top = 0;
         this.skip = 0;
     }
 
@@ -61,8 +61,8 @@ class DataService {
             });
     }
 
-    fetchTextPosts(successHandler, errorHandler) {
-        this.fetch.get("Posts",
+    fetchTextPosts(successHandler, errorHandler, top) {
+        this.fetch.get(`Posts?$top=${top}&$skip=${this.skip}`,
             postData => {
                 const posts = postData.map(post => {
                     return new Post(post);
@@ -73,6 +73,12 @@ class DataService {
                 errorHandler(error);
             }
         );
+    }
+
+    fetchPostCount(successHandler, errorHandler) {
+        this.fetch.get('posts/count',
+            success => successHandler(success),
+            error => errorHandler(error));
     }
 
     fetchAnyPosts(postType, id, successHandler, errorHandler) {
