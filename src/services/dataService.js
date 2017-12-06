@@ -64,7 +64,7 @@ class DataService {
             error => errorHandler(error));
     }
 
-    sendPost(data, successHandler, errorHandler) {
+    sendPost(post, successHandler, errorHandler) {
         fetchService.post(`${post.type}Posts`, post,
             post => successHandler(post),
             error => errorHandler(error));

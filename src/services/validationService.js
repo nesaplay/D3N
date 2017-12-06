@@ -41,9 +41,9 @@ class ValidationService {
             $('#password').prop('aria-invalid', 'true');
             return false;
         }
-        if ($('#confirm-password').val() !== $('#password').val()) {
-            $('#confirm-password').addClass('invalid');
-            $('#confirm-password').prop('aria-invalid', 'true');
+        if ($('#confirmedPassword').val() !== $('#password').val()) {
+            $('#confirmedPassword').addClass('invalid');
+            $('#confirmedPassword').prop('aria-invalid', 'true');
             return false;
         }
         return true;
