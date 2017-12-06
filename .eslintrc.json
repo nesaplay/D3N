@@ -18,15 +18,15 @@
     ],
     "rules": {
         "indent": [
-            "error",
+            "warn",
             4
         ],
         "quotes": [
             "warn",
-            "double"
+            "single"
         ],
         "semi": [
-            "error",
+            "warn",
             "always"
         ],
         "no-console": 0

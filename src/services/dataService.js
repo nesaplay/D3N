@@ -1,149 +1,92 @@
-import React, { Component } from "react";
-import { SESSION_STORAGE_USER_KEY } from "../constants";
+import React, { Component } from 'react';
+import { SESSION_STORAGE_USER_KEY } from '../constants';
 
-import FetchService from "./fetchService";
-import Profile from "../entities/Profile";
-import User from "../entities/User";
-import Post from "../entities/Post";
-
-
+import { fetchService } from './fetchService';
+import Profile from '../entities/Profile';
+import User from '../entities/User';
+import Post from '../entities/Post';
 
 class DataService {
-
     constructor() {
-        this.fetch = new FetchService();
         this.top = 5;
         this.skip = 0;
     }
 
-    fetchProfile(success, failure) {
-        this.fetch.get("profile",
+    fetchProfile(successHandler, errorHandler) {
+        fetchService.get('profile',
             profileData => {
                 const profile = new Profile(profileData);
                 sessionStorage.setItem(SESSION_STORAGE_USER_KEY, profile.userId);
-                success(profile);
+                successHandler(profile);
             },
-            error => {
-                failure(error);
-            });
+            error => errorHandler(error));
     }
 
-    updateProfile(data, success, failure) {
-        this.fetch.put("Profiles", data,
-            response =>
-                success(response),
-            error =>
-                failure(error));
+    updateProfile(data, successHandler, errorHandler) {
+        fetchService.put('Profiles', data,
+            response => successHandler(response),
+            error => errorHandler(error));
     }
 
-    fetchUsers(success, failure, top) {
-        this.fetch.get(`users?$top=${top}&$skip=${this.skip}`,
+    fetchUsers(successHandler, errorHandler, top) {
+        fetchService.get(`users?$top=${top}&$skip=${this.skip}`,
             usersData => {
-                const users = usersData.map(element => {
-                    return new User(element);
-                });
-                success(users);
+                const users = usersData.map(element => new User(element));
+                successHandler(users);
             },
-            error => {
-                failure(error);
-            }
-        );
+            error => errorHandler(error));
     }
 
-    fetchUsersById(id, success, failure) {
-        this.fetch.get(`users/${id}`,
+    fetchUsersById(id, successHandler, errorHandler) {
+        fetchService.get(`users/${id}`,
             profileData => {
                 const profile = new Profile(profileData);
-                success(profile);
+                successHandler(profile);
             },
-            error => {
-                failure(error);
-            });
+            error => failure(error));
     }
 
-    fetchTextPosts(successHandler, errorHandler) {
-        this.fetch.get("Posts",
+    fetchAllPosts(successHandler, errorHandler, top) {
+        fetchService.get(`Posts?$top=${top}&$orderby=DateCreated desc`,
             postData => {
-                const posts = postData.map(post => {
-                    return new Post(post);
-                });
+                const posts = postData.map(post => new Post(post));
                 successHandler(posts);
             },
-            error => {
-                errorHandler(error);
-            }
-        );
+            error => errorHandler(error));
     }
 
     fetchAnyPosts(postType, id, successHandler, errorHandler) {
-        this.fetch.get(`${postType}/${id}`,
+        fetchService.get(`${postType}/${id}`,
             postData => {
                 const posts = new Post(postData);
-
                 successHandler(posts);
             },
-            error => {
-                errorHandler(error);
-            }
-        );
+            error => errorHandler(error));
     }
 
     sendPost(data, successHandler, errorHandler) {
-        const post = new Post(data);
-        this.fetch.post(`${post.type}Posts`, post,
-            post => {
-                successHandler(post);
-            },
-            error => {
-                errorHandler(error);
-            });
+        fetchService.post(`${post.type}Posts`, post,
+            post => successHandler(post),
+            error => errorHandler(error));
     }
 
     fetchCommentsPosts(postId, successHandler, errorHandler) {
-        this.fetch.get(`Comments?postId=${postId}`,
-            CommentsData => {
-                console.log(CommentsData);
-                successHandler(CommentsData);
-            },
-            error => {
-                console.log("fetchComments error" + error);
-                errorHandler(error);
-            }
-
-        );
+        fetchService.get(`Comments?postId=${postId}`,
+            commentsData => successHandler(commentsData),
+            error => errorHandler(error));
     }
 
     deletePost(id, successHandler, errorHandler) {
-        this.fetch.delete(`Posts/${id}`,
-            postdelete => {
-                successHandler(postdelete);
-            },
-            error => {
-                errorHandler(error);
-            });
+        fetchService.delete(`Posts/${id}`,
+            postdelete => successHandler(postdelete),
+            error => errorHandler(error));
     }
-
 
     postComments(data, successHandler, errorHandler) {
-
-        this.fetch.post("Comments", data,
-            post => {
-                successHandler(post);
-            },
-            error => {
-                errorHandler(error);
-            });
-    }
-
-    fetchCommentsPosts(successHandler, errorHandler) {
-        this.fetch.get("Comments",
-            CommentsData => {
-                successHandler(CommentsData);
-            },
-            error => {
-                errorHandler(error);
-            }
-        );
+        fetchService.post('Comments', data,
+            post => successHandler(post),
+            error => errorHandler(error));
     }
 }
-export default DataService;
+
+export const dataService = new DataService();

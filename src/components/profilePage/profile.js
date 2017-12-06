@@ -1,10 +1,10 @@
-import React from "react";
-import Modal from "react-modal";
-import PropTypes from "prop-types";
+import React from 'react';
+import Modal from 'react-modal';
+import PropTypes from 'prop-types';
 
-import DataService from "../../services/dataService";
-import { IMG_PLACEHOLDER } from "../../constants";
-import EditProfile from "../common/editProfile";
+import { dataService } from '../../services/dataService';
+import { IMG_PLACEHOLDER } from '../../constants';
+import EditProfile from '../common/editProfile';
 
 
 export default class ProfilePage extends React.Component {
@@ -13,7 +13,6 @@ export default class ProfilePage extends React.Component {
 
         this.state = this.initState();
         this.bindEventHandlers();
-        this.createInstances();
     }
 
     // Initialization methods
@@ -21,15 +20,15 @@ export default class ProfilePage extends React.Component {
     initState() {
         return {
             profile: {
-                name: "loading...",
-                about: "loading...",
-                aboutShort: "loading...",
-                commentsCount: "0",
-                postsCount: "0",
+                name: 'loading...',
+                about: 'loading...',
+                aboutShort: 'loading...',
+                commentsCount: '0',
+                postsCount: '0',
                 avatarUrl: IMG_PLACEHOLDER,
                 modalIsOpen: false,
-                email: "loading...",
-                error: "",
+                email: 'loading...',
+                error: '',
                 userId: 0
             }
         };
@@ -42,18 +41,14 @@ export default class ProfilePage extends React.Component {
         this.closeModal = this.closeModal.bind(this);
     }
 
-    createInstances() {
-        this.dataService = new DataService();        
-    }
-
     // personal methods
     collectProfileInfo() {
         const userId = this.props.match.params.id;
         if (!userId) {
-            this.dataService.fetchProfile(this.successProfile, this.errorProfile);
+            dataService.fetchProfile(this.successProfile, this.errorProfile);
             return;
         }
-        this.dataService.fetchUsersById(userId, this.successProfile, this.errorProfile);
+        dataService.fetchUsersById(userId, this.successProfile, this.errorProfile);
     }
 
     successProfile(profile) {
@@ -83,7 +78,7 @@ export default class ProfilePage extends React.Component {
     componentWillReceiveProps(nextProps) {
         // in case we navigate from /people/:id page to /profile
         if (this.props.match.params.id != nextProps.match.params.id) {
-            this.dataService.fetchProfile(this.successProfile, this.errorProfile);
+            dataService.fetchProfile(this.successProfile, this.errorProfile);
         }
     }
 
@@ -99,7 +94,6 @@ export default class ProfilePage extends React.Component {
                         onRequestClose={this.closeModal}
                     >
                         <EditProfile profile={this.newProfileData} />
-
                     </Modal>
                 </article>
             );
@@ -113,7 +107,7 @@ export default class ProfilePage extends React.Component {
         return (
             <main className="center profilePage">
                 <div>
-                    <img src={avatarUrl} style={{ "width": "300px", "marginTop": "20px" }} alt="" className="circle responsive-img" />
+                    <img src={avatarUrl} style={{ 'width': '300px', 'marginTop': '20px' }} alt="" className="circle responsive-img" />
                 </div>
                 <div>
                     <h2 className="row col s4 offset-s4 ">

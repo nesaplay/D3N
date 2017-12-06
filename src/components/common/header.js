@@ -1,16 +1,15 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import AuthenticationService from "../../services/authenticationService";
+import { authenticationService } from '../../services/authenticationService';
 
 export default class Header extends Component {
     constructor(props) {
         super(props);
-
-        this.authentication = new AuthenticationService();
     }
+
     componentDidMount() {
-        var elem = document.querySelector(".sidenav");
+        var elem = document.querySelector('.sidenav');
         var instance = new M.Sidenav(elem);
     }
 
@@ -25,13 +24,13 @@ export default class Header extends Component {
                             <li><Link to="/feed">Feed</Link></li>
                             <li><Link to="/people">People</Link></li>
                             <li><Link to="/profile">Profile</Link></li>
-                            <li><a onClick={this.authentication.logout}>Logout </a> </li>
+                            <li><a onClick={authenticationService.logout}>Logout </a> </li>
                         </ul>
                         <ul id="mobile-demo" className="sidenav">
                             <li><Link to="/feed">Feed</Link></li>
                             <li><Link to="/people">People</Link></li>
                             <li><Link to="/profile">Profile</Link></li>
-                            <li><a onClick={this.authentication.logout}>Logout </a> </li>
+                            <li><a onClick={authenticationService.logout}>Logout </a> </li>
                         </ul>
                     </div>
                 </nav>

@@ -1,43 +1,50 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-class CreateComments extends Component {
+export default class CreateComments extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            comments: ""
-        };
-
-        this.createCommentsHandler = this.createCommentsHandler.bind(this);
-        this.sendComments = this.sendComments.bind(this);
+        this.state = this.initState();
+        this.bindEventHandlers();
     }
 
-    sendComments(e) {
-        console.log("1sendComments");
-        // e.preventDefault();
+    initState() {
+        return {
+            comment: ''
+        };
+    }
 
-        const comment = this.state.comments;
+    bindEventHandlers() {
+        this.sendComments = this.sendComments.bind(this);
+        this.updateValue = this.updateValue.bind(this);
+    }
+
+
+
+    sendComments(e) {
+        e.preventDefault();
+
+        const comment = this.state.comment;
 
         this.props.giveComment(comment);
 
     }
 
-    createCommentsHandler(event) {
-        const comments = event.target.value;
+    updateValue(event) {
+        const comment = event.target.value;
 
         this.setState({
-            comments
+            comment
         });
     }
-
 
     render() {
         return (
 
             <div className="row container center">
                 <div className="input-field col s9">
-                    <input id="comment" type="text" onChange={this.createCommentsHandler} value={event.target.value} />
+                    <input id="comment" type="text" onChange={this.updateValue} value={this.state.comment} />
                     <label htmlFor="comment">Add your comment</label>
                     <span className="helper-text" ></span>
                 </div>
@@ -51,8 +58,6 @@ class CreateComments extends Component {
         );
     }
 }
-
-export default CreateComments;
 
 CreateComments.propTypes = {
     giveComment: PropTypes.func

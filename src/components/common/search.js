@@ -1,20 +1,31 @@
-import React, {Component} from "react";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class Search extends Component {
     constructor(props) {
         super(props);
 
-        this.state ={ searchString: "" };
+        this.state = this.initState();
+        this.bindEventHandlers();
+    }
+
+    initState() {
+        return {
+            searchString: ''
+        };
+    }
+
+    bindEventHandlers() {
         this.searchRequest = this.searchRequest.bind(this);
     }
 
-    searchRequest(event){
+    searchRequest(event) {
         const searchString = event.target.value;
 
         this.setState({
             searchString
         });
+        
         this.props.onSearchRequested(searchString);
     }
 

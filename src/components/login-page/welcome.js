@@ -1,5 +1,5 @@
-import React from "react";
-import { IPSUM } from "../../constants";
+import React from 'react';
+import { IPSUM } from '../../constants';
 
 const Welcome = () => {
 

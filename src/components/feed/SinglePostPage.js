@@ -1,152 +1,130 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import { redirectService } from "../../services/redirectService";
-import DataService from "../../services/dataService";
-import CreateComments from "../comments/CreateComments";
-import SingleComments from "../comments/SingleComments";
+import { redirectService } from '../../services/redirectService';
+import { dataService } from '../../services/dataService';
+import CreateComments from '../comments/CreateComments';
+import SingleComments from '../comments/SingleComments';
 
 class SinglePostPage extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.state = this.initState();
+        this.bindEventHandlers();
+    }
+
+    initState() {
+        return {
             post: {
-                videoUrl: "dasdasdasdasdasdasdadas"
+                videoUrl: 'dasdasdasdasdasdasdadas'
             },
-            type: "",
-            comments: "",
+            type: '',
+            comments: '',
             singleComments: []
-
         };
-        this.dataService = new DataService();
+    }
 
-        this.findPosts = this.findPosts.bind(this);
+    bindEventHandlers() {
         this.whichType = this.whichType.bind(this);
-        this.success = this.success.bind(this);
-        this.failure = this.failure.bind(this);
         this.whichRenderType = this.whichRenderType.bind(this);
-        this.giveComments = this.giveComments.bind(this);
-        this.getAllComments = this.getAllComments.bind(this);
-        this.successComments = this.successComments.bind(this);
+        this.giveComment = this.giveComment.bind(this);
+        this.handlePost = this.handlePost.bind(this);
+        this.handleComments = this.handleComments.bind(this);
     }
 
     whichType() {
 
-        let type = "";
-        if (this.props.match.params.type == "text") {
-            type = "TextPosts";
+        let param = this.props.match.params.type;
+        let type = '';
 
-
-        } else if (this.props.match.params.type == "video") {
-            type = "VideoPosts";
-
-
-        } else if (this.props.match.params.type == "image") {
-            type = "ImagePosts";
+        if (param == 'text') {
+            type = 'TextPosts';
+        } else if (param == 'video') {
+            type = 'VideoPosts';
+        } else if (param == 'image') {
+            type = 'ImagePosts';
         }
-        this.findPosts(type);
+
+        this.findPost(type);
     }
 
-    findPosts(type) {
-
-        this.dataService.fetchAnyPosts(type, this.props.match.params.singleId, this.success, this.failure);
-    }
-
-    success(post) {
-        this.setState({
-            post
-        });
-        console.log("Post object", this.state.post);
-    }
-
-    failure(error) {
-        console.log(error);
+    findPost(type) {
+        dataService.fetchAnyPosts(type, this.props.match.params.singleId, this.handlePost, error => console.warn(error));
     }
 
     getAllComments() {
-        console.log("3getallcomments" + this.props.match.params.singleId);
-        this.dataService.fetchCommentsPosts(this.props.match.params.singleId, this.successComments, this.failure);
+        dataService.fetchCommentsPosts(this.props.match.params.singleId, this.handleComments, error => console.warn(error));
     }
 
-    successComments(singleComments) {
-        console.log("4object" + this.singleComments);
+    handlePost(post) {
+        this.setState({
+            post
+        });
+    }
+
+    handleComments(singleComments) {
         this.setState({
             singleComments
         });
-        console.log("5state" + this.state.singleComments);
     }
 
     // radi post i get metode
-    giveComments(comment) {
-        console.log("2prolazi give comments");
-        const postId = this.state.post.id;
-        const body = comment;
+    giveComment(comment) {
+
         const data = {
-            postId,
-            body
+            postId: this.state.post.id,
+            body: comment
         };
 
-        this.dataService.postComments(data,
-            yes => {
-                console.log(yes);
-            },
-            no => {
-                console.log(no);
-            });
+        dataService.postComments(data,
+            response => window.location.reload(),
+            error => console.warn(error));
 
         this.getAllComments();
     }
 
+    whichRenderType(type) {
 
-    whichRenderType() {
+        const { text, videoUrl, imageUrl } = this.state.post;
 
+        if (type === 'text') {
+            return <p>{text} </p>;
 
-        if (this.props.match.params.type === "text") {
-            return <p>{this.state.post.text} </p>;
+        } else if (type === 'video') {
+            const id = videoUrl.slice(-11);
+            return <iframe width="800px" height="450px" src={`https://www.youtube.com/embed/${id}`} allowFullScreen></iframe>;
 
-        } else if (this.props.match.params.type === "video") {
-            const url = this.state.post.videoUrl;
-            const id = url.slice(-11);
-            return (<iframe width="800px" height="450px" src={`https://www.youtube.com/embed/${id}`} allowFullScreen></iframe>);
-
-        } else if (this.props.match.params.type === "image") {
-            return (<img width="800px" src={this.state.post.imageUrl} />);
+        } else if (type === 'image') {
+            return <img className='single-image' src={imageUrl} />;
         }
     }
-
 
     componentDidMount() {
         this.getAllComments();
         this.whichType();
-
     }
 
     render() {
-        console.log(this.state.singleComments);
         return (
             <main className="needMargin">
                 <div className="container row">
                     <div className="col s12 center">
-                        {this.whichRenderType()}
+                        {this.whichRenderType(this.props.match.params.type)}
                     </div>
                 </div>
 
-                <CreateComments giveComment={this.giveComments} />
-                {this.state.singleComments.map(comment => {
-
-                    return <SingleComments key={comment.id} date={comment.dateCreated} authorName={comment.authorName} body={comment.body} />;
-                })}
-
-                <div className="row container center">
+                <CreateComments giveComment={this.giveComment} />
+                <div className="row container">
+                    {this.state.singleComments.map(comment =>
+                        <SingleComments key={comment.id} date={comment.dateCreated} authorName={comment.authorName} body={comment.body} />
+                    )}
 
                 </div>
             </main>
         );
     }
-
 }
-
 
 export default SinglePostPage;
 

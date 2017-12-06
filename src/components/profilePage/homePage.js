@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Header from "../common/header";
-import Feed from "../feed/feed";
-import People from "./people";
-import ProfilePage from "./profile";
-import SinglePostPage from "../feed/SinglePostPage";
-import Footer from "../common/footer";
+import Header from '../common/header';
+import Feed from '../feed/feed';
+import People from './people';
+import ProfilePage from './profile';
+import SinglePostPage from '../feed/SinglePostPage';
+import Footer from '../common/footer';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class HomePage extends Component {
 
     render() {
         return (
-            <div>
+            <div className='page-flexbox-wrapper'>
                 <Header />
                 <Switch>
                     <Redirect exact from="/" to="/feed" />

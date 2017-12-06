@@ -1,9 +1,9 @@
-import React, {Component} from "react";
-import { Link } from "react-router-dom";
+import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
-import AuthenticationService from "../../services/authenticationService";
-import ValidationService from "../../services/validationService";
-import Tabs from "./tabs";
+import { authenticationService } from '../../services/authenticationService';
+import { validationService } from '../../services/validationService';
+import Tabs from './tabs';
 
 export default class Login extends Component {
     constructor(props) {
@@ -11,27 +11,20 @@ export default class Login extends Component {
 
         this.state = this.initState();
         this.bindEventHandlers();
-        this.createInstances();
-
     }
 
     // Initialization methods
 
     initState() {
         return {
-            username: "",
-            password: "",
+            username: '',
+            password: '',
         };
     }
 
     bindEventHandlers() {
         this.submitForm = this.submitForm.bind(this);
         this.updateValue = this.updateValue.bind(this);
-    }
-
-    createInstances() {
-        this.authentication = new AuthenticationService();
-        this.validation = new ValidationService();
     }
 
     // Personal methods
@@ -53,9 +46,9 @@ export default class Login extends Component {
             password
         };
 
-        let check = this.validation.validateLogin();
-        if (check === true) {
-            this.authentication.login(userData);   
+        let validated = validationService.validateLogin();
+        if (validated === true) {
+            authenticationService.login(userData);   
         }
     }
 

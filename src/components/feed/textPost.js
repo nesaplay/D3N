@@ -1,24 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-class TextPost extends React.Component {
+export default class TextPost extends Component {
     constructor(props) {
         super(props);
         
-        this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
-        this.state = {
+        this.state = this.initState();
+        this.bindEventHandlers();
+    }
+
+    initState() {
+        return {
             posts: {
-                text: "Loading post ...",
-                id: ""
+                text: 'Loading post ...',
+                id: ''
             }
         };
+    }
 
+    bindEventHandlers() {
+        this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
     }
 
     onDeleteButtonClick() {
         this.props.onPostDelete(this.props.post.id);
     }
-
 
     render() {
         return (
@@ -37,7 +43,7 @@ class TextPost extends React.Component {
                     </p>
                 </div>
                 <div className="col s12">
-                    {this.props.enableDelete ? <button className="btn small center" onClick={this.onDeleteButtonClick}>DELETE</button> : ""}
+                    {this.props.enableDelete ? <button className="btn small center" onClick={this.onDeleteButtonClick}>DELETE</button> : ''}
                 </div>
             </div>
         );
@@ -49,5 +55,3 @@ TextPost.propTypes = {
     enableDelete: PropTypes.bool,
     onPostDelete: PropTypes.func
 };
-
-export default TextPost;

@@ -1,43 +1,50 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-
-class SingleComments extends Component {
+export default class SingleComments extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.state = this.initState();
+    }
+
+    initState() {
+        return {
             comment: {
                 id: 0,
-                dateCreated: "",
-                body: "loading..",
+                dateCreated: '',
+                body: 'loading..',
                 postId: 0,
-                authorName: "Bla",
+                authorName: 'Bla',
                 authorId: 0
             }
         };
     }
+
     render() {
+
+        const { authorName, body, date } = this.props;
+
         return (
-            <div className="row container commentDiv">
+            <div className="row commentDiv">
 
                 <div className="col s6">
-                    <strong> {this.props.authorName}</strong> {this.props.body}
+                    <strong className='author-comment'> {authorName}</strong> 
+                    <span> {body} </span>
                 </div>
 
                 <div className="col s6">
-                    {this.props.date}
+                    <div className='right'>
+                        {new Date(date).toDateString()}
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-
-export default SingleComments;
-
 SingleComments.propTypes = {
-    authorName: PropTypes.string,
-    body: PropTypes.string,
-    date: PropTypes.string
+    authorName: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired
 };

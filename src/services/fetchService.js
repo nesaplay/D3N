@@ -1,22 +1,21 @@
-import axios from "axios";
-import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from "../constants";
+import axios from 'axios';
+import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from '../constants';
 
-export default class FetchService {
+class FetchService {
 
     headers() {
 
         let sessionId = sessionStorage.getItem(SESSION_STORAGE_KEY);
 
-        if (sessionId) {
-            return { "SessionId": sessionId, "Key": API_KEY, "Content-Type": "application/json" };
-        }
-        return { "Key": API_KEY, "Content-Type": "application/json" };
+        return sessionId
+            ? { 'SessionId': sessionId, 'Key': API_KEY, 'Content-Type': 'application/json' }
+            : { 'Key': API_KEY, 'Content-Type': 'application/json' };
     }
 
     get(url, successHandler, errorHandler) {
         axios({
             url: `${BASE_URL}${url}`,
-            method: "get",
+            method: 'GET',
             headers: this.headers()
         })
             .then(response => successHandler(response.data))
@@ -26,7 +25,7 @@ export default class FetchService {
     post(url, postData, successHandler, errorHandler) {
 
         axios({
-            method: "post",
+            method: 'POST',
             url: `${BASE_URL}${url}`,
             data: postData,
             headers: this.headers()
@@ -38,7 +37,7 @@ export default class FetchService {
     put(url, postData, successHandler, errorHandler) {
 
         axios({
-            method: "put",
+            method: 'PUT',
             url: `${BASE_URL}${url}`,
             data: postData,
             headers: this.headers()
@@ -50,12 +49,13 @@ export default class FetchService {
     delete(url, successHandler, errorHandler) {
 
         axios({
-            method: "delete",
+            method: 'DELETE',
             url: `${BASE_URL}${url}`,
             headers: this.headers()
         })
             .then(response => successHandler(response.data))
             .catch(error => errorHandler(error));
     }
-
 }
+
+export const fetchService = new FetchService();

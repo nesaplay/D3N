@@ -1,12 +1,11 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroller";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroller';
 
-import PeoplePattern from "./peoplePattern";
-import DataService from "../../services/dataService";
-import Search from "../common/search";
+import { dataService } from '../../services/dataService';
+import PeoplePattern from './peoplePattern';
+import Search from '../common/search';
 
-import FetchService from "../../services/fetchService";
 
 class People extends Component {
     constructor(props) {
@@ -14,7 +13,6 @@ class People extends Component {
 
         this.state = this.initState();
         this.bindEventHandlers();
-        this.createInstances();
     }
 
     // Initialization methods
@@ -23,7 +21,7 @@ class People extends Component {
         return {
             users: [],
             filteredUsers: [],
-            error: "",
+            error: '',
             hasMore: true,
             pageNumber: 4
         };
@@ -36,12 +34,7 @@ class People extends Component {
         this.loadMoreUsers = this.loadMoreUsers.bind(this);
     }
 
-    createInstances() {
-        this.dataService = new DataService();
-        this.fetchService = new FetchService();
-    }
-
-    // Personal methods
+    // Custom methods
 
     updateStateWithUsers(users) {
         this.setState({
@@ -58,7 +51,7 @@ class People extends Component {
 
         const currentUsers = this.state.users;
 
-        if (searchString === "") {
+        if (searchString === '') {
             this.setState({
                 filteredUsers: currentUsers
             });
@@ -73,10 +66,8 @@ class People extends Component {
     }
 
     loadMoreUsers(page) {
-        console.log("pageNumber is", page);
-        this.dataService.fetchUsers(this.updateStateWithUsers, this.handleError, page * 5);
+        dataService.fetchUsers(this.updateStateWithUsers, this.handleError, page * 5);
 
-        // Zakucao sam broj strana na 5, ovo cemo da promenimo kad Stanko ukljuci novi route users/count koji nam vraca duzinu niza
         if (page > this.state.pageNumber) {
             this.setState({ hasMore: false });
         }

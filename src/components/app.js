@@ -1,24 +1,21 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-import LoginPage from "./login-page/login-page";
-import HomePage from "./profilePage/homePage";
-import AuthenticationService from "../services/authenticationService";
+import LoginPage from './login-page/login-page';
+import HomePage from './profilePage/homePage';
+import { authenticationService } from '../services/authenticationService';
 
-class App extends React.Component {
+export default class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.authentication = new AuthenticationService();
     }
 
     render() {
 
-        return this.authentication.isUserAuthenticated() ?
-            <HomePage /> :
-            <LoginPage />;
+        return authenticationService.isUserAuthenticated() 
+            ?   <HomePage /> 
+            :   <LoginPage />;
 
     }
 }
-
-export default App;

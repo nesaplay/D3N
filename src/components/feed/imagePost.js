@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class ImagePost extends React.Component {
+export default class ImagePost extends React.Component {
     constructor(props) {
         super(props);
+
         this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
-        
     }
 
     onDeleteButtonClick() {
@@ -28,7 +28,7 @@ class ImagePost extends React.Component {
                     </p>
                 </div>
                 <div className="col s12">
-                    {this.props.enableDelete ? <button className="btn small center" onClick={this.onDeleteButtonClick}>DELETE</button> : ""}
+                    {this.props.enableDelete ? <button className="btn small center" onClick={this.onDeleteButtonClick}>DELETE</button> : ''}
                 </div>
             </main>
         );
@@ -40,5 +40,3 @@ ImagePost.propTypes = {
     enableDelete: PropTypes.bool,
     onPostDelete: PropTypes.func
 };
-
-export default ImagePost;

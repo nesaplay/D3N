@@ -1,17 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class VideoPost extends React.Component {
+export default class VideoPost extends React.Component {
     constructor(props) {
-        super(props);
+        super(props);   
+
         this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
-        
     }
 
     onDeleteButtonClick() {
         this.props.onPostDelete(this.props.post.id);
     }
-
 
     render() {
 
@@ -33,7 +32,7 @@ class VideoPost extends React.Component {
                     </p>
                 </div>
                 <div className="col s12">
-                    {this.props.enableDelete ? <button className="btn small center" onClick={this.onDeleteButtonClick}>DELETE</button> : ""}
+                    {this.props.enableDelete ? <button className="btn small center" onClick={this.onDeleteButtonClick}>DELETE</button> : ''}
                 </div>
             </div>
         );
@@ -45,5 +44,3 @@ VideoPost.propTypes = {
     enableDelete: PropTypes.bool,
     onPostDelete: PropTypes.func
 };
-
-export default VideoPost;

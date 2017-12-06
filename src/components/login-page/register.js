@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { validate } from "jquery";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { validate } from 'jquery';
 
-import AuthenticationService from "../../services/authenticationService";
-import ValidationService from "../../services/validationService";
-import Tabs from "./tabs";
+import { authenticationService } from '../../services/authenticationService';
+import { validationService } from '../../services/validationService';
+import Tabs from './tabs';
 
 class Register extends Component {
     constructor(props) {
@@ -12,29 +12,23 @@ class Register extends Component {
 
         this.state = this.initState();
         this.bindEventHandlers();
-        this.createInstances();
     }
 
     // Initialization methods
 
     initState() {
         return {
-            name: "",
-            username: "",
-            email: "",
-            password: "",
-            confirmedPassword: ""
+            name: '',
+            username: '',
+            email: '',
+            password: '',
+            confirmedPassword: ''
         };
     }
 
     bindEventHandlers() {
         this.updateValue = this.updateValue.bind(this);
         this.submitForm = this.submitForm.bind(this);
-    }
-
-    createInstances() {
-        this.authentication = new AuthenticationService();
-        this.validation = new ValidationService();
     }
 
     // Personal methods
@@ -44,42 +38,6 @@ class Register extends Component {
             [target.id]: target.value
         });
     }
-
-    // nameChangeHandler(event) {
-    //     const usernameString = event.target.value;
-
-    //     this.setState({
-    //         usernameString
-    //     });
-    // }
-    // usernameChangeHandler(event) {
-    //     const nameString = event.target.value;
-
-    //     this.setState({
-    //         nameString
-    //     });
-    // }
-    // emailChangeHandler(event) {
-    //     const emailString = event.target.value;
-
-    //     this.setState({
-    //         emailString
-    //     });
-    // }
-    // passwordChangeHandler(event) {
-    //     const passwordString = event.target.value;
-
-    //     this.setState({
-    //         passwordString
-    //     });
-    // }
-    // passwordConfirmedHandler(event) {
-    //     const confirmedPassword = event.target.value;
-
-    //     this.setState({
-    //         confirmedPassword
-    //     });
-    // }
 
     submitForm(event) {
         event.preventDefault();
@@ -94,10 +52,10 @@ class Register extends Component {
             username
         };
 
-        let validateChecker = this.validation.validateRegister();
+        let validated = validationService.validateRegister();
 
-        if (validateChecker === true) {
-            this.authentication.register(userData);
+        if (validated === true) {
+            authenticationService.register(userData);
         }
     }
 

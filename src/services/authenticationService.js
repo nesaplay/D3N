@@ -1,41 +1,36 @@
-import React from "react";
-import FetchService from "../services/fetchService";
-import { redirectService } from "./redirectService";
-import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from "../constants";
+import React from 'react';
+import { fetchService } from '../services/fetchService';
+import { redirectService } from './redirectService';
+import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from '../constants';
 
-export default class AuthenticationService {
-    constructor(props) {
-
-        this.fetch = new FetchService();
-        
-    }
+class AuthenticationService {
 
     login(userData) {
-        this.fetch.post("login", userData, this.successRequest, this.errorRequest);
+        fetchService.post('login', userData, this.successRequest, this.errorRequest);
     }
 
     register(userData) {
-        this.fetch.post("register", userData);
-        redirectService.goTo("/");
+        fetchService.post('register', userData);
+        redirectService.goTo('/');
     }
 
     logout() {
         sessionStorage.removeItem(SESSION_STORAGE_KEY);
-        redirectService.goTo("/");
+        redirectService.goTo('/');
     }
 
     successRequest(data) {
         sessionStorage.setItem(SESSION_STORAGE_KEY, data.sessionId);
-        redirectService.goTo("/profile");
+        redirectService.goTo('/profile');
     }
 
     errorRequest(error) {
-        console.warn(error.response.data.error.message);
+        console.warn(error);
     }
 
     isUserAuthenticated() {
         return !!sessionStorage.getItem(SESSION_STORAGE_KEY);
     }
-
 }
 
+export const authenticationService = new AuthenticationService();
