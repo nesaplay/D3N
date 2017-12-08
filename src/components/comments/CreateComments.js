@@ -49,7 +49,7 @@ export default class CreateComments extends Component {
                     <span className="helper-text" ></span>
                 </div>
                 <div className="col s3">
-                    <button onClick={this.sendComments} type="submit"  className="btn waves-effect waves-light red" >
+                    <button onClick={this.sendComments} type="submit"  className="btn waves-effect waves-light" >
                     Send
                     </button>
                 </div>

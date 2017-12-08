@@ -24,7 +24,7 @@ export default class ImagePost extends React.Component {
                 </div>
                 <div className="col s6">
                     <p className="right">
-                        {/* Comments: {this.props.post.commentsNum} */}
+                        Comments: {this.props.post.commentsNum}
                     </p>
                 </div>
                 <div className="col s12">

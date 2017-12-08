@@ -1,12 +1,17 @@
 import React from 'react';
-import { IPSUM } from '../../constants';
+import { BITBOOK_INFO_1, BITBOOK_INFO_2 } from '../../constants';
 
 const Welcome = () => {
 
     return (
-        <div className="col s6 ">
-            <h1>Welcome to BitBook</h1>
-            <p>{IPSUM}</p>
+        <div className='row'>
+            <div className='col s12'>
+                <h1 className='greeting-wave'>Welcome to BitBook</h1>
+            </div>
+            <div className='col s12'>
+                <p className='flow-text'>{BITBOOK_INFO_1}</p>
+                <p className='flow-text'>{BITBOOK_INFO_2}</p>
+            </div>
         </div>
     );
 };

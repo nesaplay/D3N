@@ -5,13 +5,12 @@ import { SESSION_STORAGE_KEY, API_KEY, BASE_URL } from '../constants';
 
 class AuthenticationService {
 
-    login(userData) {
-        fetchService.post('login', userData, this.successRequest, this.errorRequest);
+    login(userData, errorHandler) {
+        fetchService.post('login', userData, this.successLogin, error => errorHandler(error.response.data.error.message));
     }
 
-    register(userData) {
-        fetchService.post('register', userData);
-        redirectService.goTo('/');
+    register(userData, errorHandler) {
+        fetchService.post('register', userData, this.successRegister, error => errorHandler(error.response.data.error.message));
     }
 
     logout() {
@@ -19,13 +18,13 @@ class AuthenticationService {
         redirectService.goTo('/');
     }
 
-    successRequest(data) {
+    successLogin(data) {
         sessionStorage.setItem(SESSION_STORAGE_KEY, data.sessionId);
         redirectService.goTo('/profile');
     }
 
-    errorRequest(error) {
-        console.warn(error);
+    successRegister() {
+        redirectService.goTo('/');        
     }
 
     isUserAuthenticated() {

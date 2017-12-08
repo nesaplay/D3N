@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { authenticationService } from '../../services/authenticationService';
 import { validationService } from '../../services/validationService';
-import Tabs from './tabs';
 
 export default class Login extends Component {
     constructor(props) {
@@ -19,15 +18,17 @@ export default class Login extends Component {
         return {
             username: '',
             password: '',
+            errorMessage: '',
+            isHidden: true
         };
     }
 
     bindEventHandlers() {
         this.submitForm = this.submitForm.bind(this);
         this.updateValue = this.updateValue.bind(this);
+        this.errorMessage = this.errorMessage.bind(this);
     }
 
-    // Personal methods
 
     updateValue({ target }) {
         this.setState({
@@ -39,7 +40,7 @@ export default class Login extends Component {
     submitForm(event) {
         event.preventDefault();
 
-        const {username, password} = this.state;
+        const { username, password } = this.state;
 
         let userData = {
             username,
@@ -48,15 +49,18 @@ export default class Login extends Component {
 
         let validated = validationService.validateLogin();
         if (validated === true) {
-            authenticationService.login(userData);   
+            authenticationService.login(userData, this.errorMessage);
         }
+    }
+
+    errorMessage(errorMessage) {
+        this.setState({ errorMessage, isHidden: false });
     }
 
     render() {
 
         return (
-            <div className="col s6 container row">
-                <Tabs/>
+            <div className="row form-welcome">
                 <form className="col s12" onSubmit={this.submitForm} >
 
                     <div className="input-field col s12">
@@ -70,9 +74,16 @@ export default class Login extends Component {
                         <span className="helper-text" data-error="password need to be at least 6 char long" data-success="success"></span>
                     </div>
                     <div className="input-field col s12">
-                        <input type="submit" value="Login" className="btn waves-effect waves-light blue lighten-3" />
+                        <button type="submit" className="btn waves-effect waves-light right">Login</button>
                     </div>
                 </form>
+                <div className={['col', 's12', this.state.isHidden && 'hide'].join(' ')}>
+                    <div className='error-box'>
+                        <p>SERVER RESPONSE</p>
+                        <p className='error-message'>{this.state.errorMessage}</p>
+                        <p>PLEASE TRY AGAIN!</p>
+                    </div>
+                </div>
             </div>
         );
     }

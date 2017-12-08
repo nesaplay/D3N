@@ -48,6 +48,10 @@ class Feed extends Component {
         });
     }
 
+    initModal() {
+        Modal.setAppElement('body');                
+    }
+
     bindEventHandlers() {
         this.successHandler = this.successHandler.bind(this);
         this.openModal = this.openModal.bind(this);
@@ -141,7 +145,7 @@ class Feed extends Component {
 
             if (this.state.filterType !== 'all') {
                 if (post.type === 'text' && this.state.filterType === 'text') {
-                    return (<div className="section center card-panel hoverable" key={post.id}>
+                    return (<div className="section center card-panel" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <TextPost onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)} post={post} />
                         </Link>
@@ -155,7 +159,7 @@ class Feed extends Component {
                     </div>);
                 }
                 if (post.type === 'image' && this.state.filterType === 'image') {
-                    return (<div className="section center card-panel hoverable" key={post.id}>
+                    return (<div className="section center card-panel" key={post.id}>
                         <Link to={`/feed/${post.type}/${post.id}`} key={post.id}>
                             <ImagePost post={post} onPostDelete={this.deletePost} enableDelete={this.isMyPost(post)} />
                         </Link>
@@ -189,8 +193,8 @@ class Feed extends Component {
 
     displayFilter() {
         return (
-            <div className="section right ">
-                <a className="dropdown-trigger btn red" data-target="dropdown1">Filter Posts ⮟</a>
+            <div className="section right">
+                <button className="dropdown-trigger btn" data-target="dropdown1">Filter Posts ⮟</button>
                 <ul id="dropdown1" className="dropdown-content">
                     <li><a id="all" onClick={this.updateFilterType}>All posts</a></li>
                     <li className="divider"></li>
@@ -206,7 +210,7 @@ class Feed extends Component {
         return (
             <div className="section center">
                 <div className="fixed-action-btn">
-                    <a className="btn-floating btn-large red">
+                    <a className="btn-floating btn-large">
                         <i className="large material-icons">add</i>
                     </a>
                     <ul className="">
@@ -232,12 +236,14 @@ class Feed extends Component {
             },
             content: {
                 position: 'absolute',
-                top: '100px',
-                left: '100px',
-                right: '100px',
-                bottom: '200px',
+                top: 'none',
+                left: 'none',
+                bottom: '100px',
+                right: '90px',
+                width: '440px',
+                height: '290px',
                 border: '1px solid #ccc',
-                background: '#fff',
+                background: '#DAE2DF',
                 overflow: 'auto',
                 WebkitOverflowScrolling: 'touch',
                 borderRadius: '4px',
@@ -255,14 +261,14 @@ class Feed extends Component {
                     style={style}
                 >
                     <div className="row">
-                        <div className="col s12 row">
-                            <h4 className="col s6">New text post</h4>
-                            <p className="col s6">
+                        <div className="col s12 row section modal-format">
+                            <h4 className="col s10">NEW TEXT POST</h4>
+                            <p className="col s2">
                                 <span className="right"><i style={{ cursor: 'pointer' }} onClick={this.closeModal} className="material-icons">close</i></span>
                             </p>
                         </div>
                         <form className="col s12">
-                            <div className="row">
+                            <div className="row modal-format">
                                 <div className="input-field col s12">
                                     <textarea id="text" className="materialize-textarea" onChange={this.valueHandler} value={this.state.postContent} ></textarea>
                                     <label htmlFor="text">Post Content</label>
@@ -286,14 +292,14 @@ class Feed extends Component {
                     style={style}
                 >
                     <div className="row">
-                        <div className="col s12 row">
-                            <h4 className="col s6">New image post</h4>
-                            <p className="col s6">
+                        <div className="col s12 row section modal-format">
+                            <h4 className="col s10">NEW IMAGE POST</h4>
+                            <p className="col s2">
                                 <span className="right"><i style={{ cursor: 'pointer' }} onClick={this.closeModal} className="material-icons">close</i></span>
                             </p>
                         </div>
                         <form className="col s12">
-                            <div className="row">
+                            <div className="row modal-format">
                                 <div className="input-field col s12">
                                     <input type="text" id="image" onChange={this.valueHandler} value={this.state.imageContent} />
                                     <label htmlFor="image">Image link</label>
@@ -317,14 +323,14 @@ class Feed extends Component {
                     style={style}
                 >
                     <div className="row">
-                        <div className="col s12 row">
-                            <h4 className="col s6">New video post</h4>
-                            <p className="col s6">
+                        <div className="col s12 row section modal-format">
+                            <h4 className="col s10">NEW VIDEO POST</h4>
+                            <p className="col s2">
                                 <span className="right"><i style={{ cursor: 'pointer' }} onClick={this.closeModal} className="material-icons">close</i></span>
                             </p>
                         </div>
                         <form className="col s12">
-                            <div className="row">
+                            <div className="row modal-format">
                                 <div className="input-field col s12">
                                     <input type="text" id="video" onChange={this.valueHandler} value={this.state.videoContent} />
                                     <label htmlFor="video">YouTube video link</label>
@@ -351,14 +357,10 @@ class Feed extends Component {
         this.setState({ modalIsOpen: false });
     }
 
-    // Lifecycle methods
-    componentWillMount() {
-        Modal.setAppElement('body');
-    }
-
     componentDidMount() {
         this.initDropdown();
         this.initPostButton();
+        this.initModal();       
     }
 
     render() {
@@ -372,7 +374,7 @@ class Feed extends Component {
                             loadMore={this.fetchAllPosts}
                             hasMore={this.state.hasMore}
                             loader={<div className="preloader-wrapper big active loader">
-                                <div className="spinner-layer spinner-blue-only">
+                                <div className="spinner-layer">
                                     <div className="circle-clipper left">
                                         <div className="circle"></div>
                                     </div><div className="gap-patch">

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import M from 'materialize-css';
 
 import { authenticationService } from '../../services/authenticationService';
 
@@ -10,15 +11,17 @@ export default class Header extends Component {
 
     componentDidMount() {
         var elem = document.querySelector('.sidenav');
-        var instance = new M.Sidenav(elem);
+        var instance = new M.Sidenav(elem, { edge: 'right' });
     }
 
     render() {
         return (
             <header className="menu">
-                <nav className="transparent z-depth-0">
+                <nav className="">
                     <div className="nav-wrapper container">
-                        <a href="#" className="brand-logo left">BitBook</a>
+                        <a href="#" className="brand-logo left">
+                            <span className='logo-prime-1'>Bit</span>
+                            <span className='logo-prime-2'>Book</span></a>
                         <a href="#" data-target="mobile-demo" className="sidenav-trigger button-collapse right"><i className="material-icons">menu</i></a>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><Link to="/feed">Feed</Link></li>

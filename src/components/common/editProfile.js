@@ -60,7 +60,12 @@ export default class EditProfile extends Component {
     render() {
         return (
             <div className="login/register-form  col s6 container row">
-                <form className="col s12" id="register-form" onSubmit={this.submitForm}>
+                <div className='col s12 section edit-dialog'>
+                    <h4 className=''>UPDATE PROFILE</h4>
+                    <div className='divider'></div>
+                </div>
+
+                <form className="col s10 right" id="register-form" onSubmit={this.submitForm}>
                     <div className="input-field col s12">
                         <input id="name" type="text" required="" aria-required="" className="validate" onChange={this.updateValue} value={this.state.name} />
                         <label htmlFor="name">Name</label>
@@ -86,7 +91,7 @@ export default class EditProfile extends Component {
                         <label htmlFor="avatarUrl">AvatarUrl</label>
                         <span className="helper-text" data-error="avatar is required" data-success="success"></span>
                     </div>
-                    <input type="submit" value="Register" className="btn waves-effect waves-light blue lighten-3" />
+                    <button type="submit" className="btn waves-effect waves-light right">Update</button>
                 </form>
             </div>
         );

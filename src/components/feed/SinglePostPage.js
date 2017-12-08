@@ -89,7 +89,7 @@ class SinglePostPage extends Component {
         const { text, videoUrl, imageUrl } = this.state.post;
 
         if (type === 'text') {
-            return <p>{text} </p>;
+            return <p className='flow-text'>{text} </p>;
 
         } else if (type === 'video') {
             const id = videoUrl.slice(-11);

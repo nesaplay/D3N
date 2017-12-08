@@ -14,13 +14,16 @@
     "install": "^0.10.2",
     "jquery": "^3.2.1",
     "jquery-validation": "^1.17.0",
+    "materialize-css": "^1.0.0-alpha.2",
     "npm": "^5.5.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.1.0",
     "react-infinite-scroller": "^1.1.1",
+    "react-materialize": "^1.1.1",
     "react-modal": "^3.1.3",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "url-loader": "^0.6.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

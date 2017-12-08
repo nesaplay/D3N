@@ -1,3 +1,6 @@
+@import url('../../node_modules/materialize-css/dist/css/materialize.css');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+
 .needMargin {
     margin-top: 2em;
 }
@@ -6,20 +9,40 @@
     min-height: 500px;
 }
 
-.menu {
-    background-color: #420c75;
-}
-
-.app {
-    background-color: #d6d3d3;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#d6d3d3));
-    background-image: -webkit-linear-gradient(top, #fff, #d6d3d3);
-    background-image: -moz-linear-gradient(top, #fff, #d6d3d3);
-    background-image: linear-gradient(to bottom, #fff, #d6d3d3);
+.landing-container {
+    border: 1px solid black;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;    
 }
 
 .profilePage {
     min-height: 800px;
+}
+
+.greeting-wave {
+    margin: 0 auto;
+}
+
+.page-footer {
+    padding-bottom: 20px;
+}
+
+.logo-prime-1 {
+    color: #255957;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.logo-prime-2 {
+    text-transform: uppercase;
+    color: rgb(218, 226, 223);
+    font-weight: 700;
+    
+}
+
+.modal-format {
+    margin: 0;
 }
 
 body {
@@ -27,6 +50,9 @@ body {
     min-height: 100vh;
     flex-direction: column;
     font-weight: 300;
+    font-family: 'Work Sans', sans-serif; 
+    color: #2F394D;
+    background-color: #DAE2DF;
 }
 
 main {
@@ -37,7 +63,10 @@ main {
     display: flex; 
     min-height: 100vh;
     flex-direction: column;
-    main flex: 1 1 auto;
+}
+
+.form-welcome {
+    height: 100%;
 }
 
 .addBtn {
@@ -48,10 +77,14 @@ main {
     background-color: #420c75;
 }
 
+.news-feed {
+    padding: 0;
+}
+
 .commentDiv {
     width: 100%;
-    background-color: #d6d3d3;
     border-radius: 5%;
+    border: 1px solid #437C90;    
     float: left;
 }
 
@@ -65,4 +98,44 @@ main {
 
 .loader {
     margin: 200px 0 0 200px;
+}
+
+.error-box {
+    border: 1px solid red;
+    text-align: center;    
+    margin: 20px 10px 10px 10px;
+    padding: 10px;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+}
+
+.btn {
+    color: white;
+}
+
+.edit-dialog {
+    margin-bottom: 30px;
+}
+
+.search-display {
+    padding-top: 20px;
+}
+
+.people-item {
+    border: 2px solid #437C90;
+}
+
+.people-item-text {
+    color: #2F394D;
+}
+
+.divider {
+    background-color: #2F394D;
+}
+
+.nav-wrapper {
+    padding: 0 0.75rem;
 }

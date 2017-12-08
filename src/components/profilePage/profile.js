@@ -85,13 +85,41 @@ export default class ProfilePage extends React.Component {
     // Render methods 
 
     renderModal() {
+
+        const style = {
+            overlay: {
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(255, 255, 255, 0.75)'
+            },
+            content: {
+                position: 'absolute',
+                top: '100px',
+                left: '100px',
+                bottom: '100px',
+                right: '100px',
+                border: '1px solid #ccc',
+                background: '#DAE2DF',
+                overflow: 'auto',
+                WebkitOverflowScrolling: 'touch',
+                borderRadius: '4px',
+                outline: 'none',
+                padding: '20px'
+
+            }
+        };
+
         if (!this.props.match.params.id) {
             return (
                 <article>
-                    <button className="btn red" onClick={this.openModal}>Edit Profile</button>
+                    <button className="btn" onClick={this.openModal}>Edit Profile</button>
                     <Modal
                         isOpen={this.state.modalIsOpen}
                         onRequestClose={this.closeModal}
+                        style={style}
                     >
                         <EditProfile profile={this.newProfileData} />
                     </Modal>
@@ -103,11 +131,12 @@ export default class ProfilePage extends React.Component {
     render() {
         
         const { avatarUrl, name, about, postsCount, commentsCount } = this.state.profile;
+        const source = avatarUrl ? avatarUrl : IMG_PLACEHOLDER;
         
         return (
             <main className="center profilePage">
                 <div>
-                    <img src={avatarUrl} style={{ 'width': '300px', 'marginTop': '20px' }} alt="" className="circle responsive-img" />
+                    <img src={source} style={{ 'width': '300px', 'marginTop': '20px' }} alt="" className="circle responsive-img" />
                 </div>
                 <div>
                     <h2 className="row col s4 offset-s4 ">
